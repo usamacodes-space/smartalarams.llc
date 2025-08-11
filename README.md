@@ -1,1 +1,0 @@
-# smartalarams.llc

@@ -14,22 +14,17 @@
           colors: {
             brand: { 500: '#00bfe6', 700: '#009bb8' },
             navy: '#13334d',
-            accent: '#00bfe6',
-            lilac: '#e9ddff',
-            peach: '#f9e2d5',
-            lavender: '#e7d3fa'
+            accent: '#00bfe6'
           },
           boxShadow: {
             soft: '0 16px 40px -18px rgba(0,0,0,.35)',
             card: '0 28px 70px -25px rgba(0,0,0,.35)'
-          },
-          borderRadius: { xl2: '1.25rem' }
+          }
         }
       }
     }
   </script>
 
-  <!-- Inter font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -37,47 +32,62 @@
   <style>
     body { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial; background:#f1f5f9; }
 
-    /* THEME BUTTONS (copy of index styles) */
-    .btn { display:inline-flex; align-items:center; justify-content:center; font-weight:700; color:#fff; border-radius:1rem; padding:.75rem 1.25rem; user-select:none; transition:all .3s ease; }
+    /* THEME BUTTONS (match index) */
+    .btn { display:inline-flex; align-items:center; justify-content:center; font-weight:700; color:#fff; border-radius:1rem; padding:1rem 1.35rem; user-select:none; transition:all .3s ease; }
     .btn-magic { background-image:linear-gradient(to bottom,#1f2937,#0f172a); box-shadow:0 18px 24px -18px rgba(0,0,0,.55),0 6px 18px -10px rgba(19,51,77,.45); border:1px solid rgba(255,255,255,.06); }
     .btn-magic:hover { background-image:linear-gradient(to bottom,#00bfe6,#009bb8); transform:translateY(-2px); box-shadow:0 28px 46px -22px rgba(0,191,230,.65),0 14px 28px -16px rgba(0,155,184,.55); }
-    .btn-magic:focus-visible { outline:none; box-shadow:0 0 0 4px rgba(0,191,230,.4); }
     .btn-outline { background:#fff; color:#0f172a; border:1px solid #e5e7eb; }
     .btn-outline:hover { background:#f8fafc; }
+    .btn:focus-visible { outline:none; box-shadow:0 0 0 4px rgba(0,191,230,.35); }
 
-    .input { width:100%; border:1px solid #cbd5e1; border-radius:.75rem; padding:.65rem .8rem; outline:none; }
+    .input { width:100%; border:1px solid #cbd5e1; border-radius:.75rem; padding:.7rem .85rem; outline:none; }
     .input:focus { box-shadow:0 0 0 3px rgba(0,191,230,.35); border-color:#00bfe6; }
+    .card  { border-radius:1rem; background:#fff; box-shadow:var(--shadow, 0 28px 70px -25px rgba(0,0,0,.25)); }
 
-    .card { border-radius:1rem; background:#fff; box-shadow:var(--shadow, 0 28px 70px -25px rgba(0,0,0,.25)); }
-
-    /* STEPPER like the image: rail + dots */
+    /* Stepper (purple rail + dots) */
     .step-rail { position:relative; height:6px; background:#e5e7eb; border-radius:9999px; }
     .step-rail > .progress { position:absolute; inset:0 auto 0 0; height:6px; background:#5b21b6; border-radius:9999px; width:20%; transition:width .3s ease; }
     .step-dots { position:absolute; top:50%; left:0; right:0; transform:translateY(-50%); display:flex; justify-content:space-between; padding:0 2px; }
     .step-dot { width:14px; height:14px; border-radius:9999px; background:#5b21b6; box-shadow:0 0 0 3px rgba(91,33,182,.15) inset; }
     .step-dot.is-upcoming { background:#f1f5f9; box-shadow:0 0 0 3px #e5e7eb inset; }
 
-    /* Pricing card look from reference, themed */
-    .price-card { border-radius:18px; background:#fff; box-shadow:0 10px 30px rgba(0,0,0,.08); overflow:hidden; border:1px solid #e9eef5; }
+    /* Pricing cards + selected gradient ring */
+    .price-card { border-radius:18px; background:#fff; box-shadow:0 10px 30px rgba(0,0,0,.08); overflow:hidden; border:1px solid #e9eef5; transition:transform .18s ease, box-shadow .18s ease; }
+    .price-card:hover { transform:translateY(-2px); box-shadow:0 14px 40px rgba(0,0,0,.12); }
     .price-head { padding:20px; border-radius:16px; margin:16px; }
     .price-body { padding:20px; }
-    .price-button { border-radius:9999px; background:#111827; color:#fff; font-weight:700; padding:.8rem 1.1rem; }
+    .price-button { border-radius:9999px; background:#111827; color:#fff; font-weight:700; padding:.95rem 1.1rem; }
     .price-button:hover { background:#0b1220; }
-    .price-list li { display:flex; align-items:center; gap:.6rem; padding:.7rem 0; border-bottom:1px dashed #e5e7eb; }
+    .price-list li { padding:.7rem 0; border-bottom:1px dashed #e5e7eb; }
     .price-list li:last-child { border-bottom:0; }
+    .price-card.selected { box-shadow:0 10px 40px rgba(0,191,230,.28); border-color:transparent; }
+    .price-card.selected .price-head { position:relative; }
+    .price-card.selected .price-head::after{
+      content:""; position:absolute; inset:-2px; border-radius:18px;
+      padding:2px; background:linear-gradient(90deg,#00bfe6,#009bb8);
+      -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite:xor; mask-composite:exclude;
+    }
+
+    /* Make *white* text in the inline SVG navy */
+    .brand-logo [fill="#ffffff"] { fill:#13334d !important; }
   </style>
 </head>
 
 <body>
-  <!-- Big logo + name (navy) -->
+  <!-- Logo only (inline SVG) -->
   <header class="pt-8 pb-4 text-center">
-    <div class="inline-flex items-center gap-3">
-      <img src="Assets/Images/logo.svg" alt="Smart Alarms logo" class="h-16 w-auto">
-      <span class="text-3xl sm:text-4xl font-extrabold" style="color:#13334d;">Smart Alarms</span>
+    <div class="inline-flex items-center justify-center">
+      <div class="brand-logo h-[70px] w-auto">
+        <!-- Paste your full inline SVG here (same as index). White fills render as navy via CSS above. -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 188.25 52.499999" height="70" preserveAspectRatio="xMidYMid meet">
+          <!-- your SVG paths -->
+        </svg>
+      </div>
     </div>
   </header>
 
-  <!-- Centered wizard card -->
+  <!-- Wizard card -->
   <main class="max-w-5xl mx-auto px-4 pb-16">
     <section class="card p-5 sm:p-8" style="--shadow: 0 28px 70px -25px rgba(0,0,0,.35)">
 
@@ -90,33 +100,27 @@
         <div class="text-center step-label">Confirmation</div>
       </div>
 
-      <!-- Stepper rail + dots like screenshot -->
+      <!-- Stepper -->
       <div class="relative mb-8">
-        <div class="step-rail">
-          <div id="progress" class="progress" style="width:20%"></div>
-        </div>
+        <div class="step-rail"><div id="progress" class="progress" style="width:20%"></div></div>
         <div class="step-dots">
-          <span class="step-dot"></span>
-          <span class="step-dot"></span>
-          <span class="step-dot"></span>
-          <span class="step-dot is-upcoming"></span>
-          <span class="step-dot is-upcoming"></span>
+          <span class="step-dot"></span><span class="step-dot"></span><span class="step-dot"></span>
+          <span class="step-dot is-upcoming"></span><span class="step-dot is-upcoming"></span>
         </div>
       </div>
 
-      <!-- Wizard form -->
-      <form id="wizard" class="space-y-8">
-        <!-- STEP 1: Packages (exact look, themed) -->
+      <form id="wizard" class="space-y-8" novalidate>
+        <!-- STEP 1: Packages -->
         <div class="step" data-step="1">
           <h2 class="text-2xl font-black text-slate-900 mb-4">Select a Security Package</h2>
           <div class="grid gap-6 md:grid-cols-3">
             <!-- Starter -->
-            <label class="price-card cursor-pointer group">
+            <label class="price-card cursor-pointer group" data-plan="Starter">
               <input type="radio" name="plan" value="Starter" class="sr-only" required>
               <div class="price-head" style="background:#f9e2d5">
                 <div class="text-sm font-semibold text-slate-700">Starter Plan</div>
                 <div class="mt-2">
-                  <div class="text-4xl font-black tracking-tight">Free <span class="text-lg font-semibold text-slate-600">/ Month</span></div>
+                  <div class="text-4xl font-black">Free <span class="text-lg font-semibold text-slate-600">/ Month</span></div>
                   <p class="text-slate-700 mt-1">Perfect for individuals or small teams</p>
                 </div>
                 <button type="button" class="price-button w-full mt-4 select-btn">Select</button>
@@ -134,12 +138,12 @@
             </label>
 
             <!-- Professional -->
-            <label class="price-card cursor-pointer group">
+            <label class="price-card cursor-pointer group" data-plan="Professional">
               <input type="radio" name="plan" value="Professional" class="sr-only">
               <div class="price-head" style="background:#e0d9ff">
                 <div class="text-sm font-semibold text-slate-700">Professional Plan</div>
                 <div class="mt-2">
-                  <div class="text-4xl font-black tracking-tight">150 <span class="text-lg font-semibold text-slate-600">/ Month</span></div>
+                  <div class="text-4xl font-black">150 <span class="text-lg font-semibold text-slate-600">/ Month</span></div>
                   <p class="text-slate-700 mt-1">Perfect for individuals or small teams</p>
                 </div>
                 <button type="button" class="price-button w-full mt-4 select-btn">Select</button>
@@ -157,12 +161,12 @@
             </label>
 
             <!-- Enterprise -->
-            <label class="price-card cursor-pointer group">
+            <label class="price-card cursor-pointer group" data-plan="Enterprise">
               <input type="radio" name="plan" value="Enterprise" class="sr-only">
               <div class="price-head" style="background:#ead4ff">
                 <div class="text-sm font-semibold text-slate-700">Enterprise Plan</div>
                 <div class="mt-2">
-                  <div class="text-4xl font-black tracking-tight">$299 <span class="text-lg font-semibold text-slate-600">/ Month</span></div>
+                  <div class="text-4xl font-black">$299 <span class="text-lg font-semibold text-slate-600">/ Month</span></div>
                   <p class="text-slate-700 mt-1">Perfect for individuals or small teams</p>
                 </div>
                 <button type="button" class="price-button w-full mt-4 select-btn">Select</button>
@@ -208,76 +212,65 @@
               <input type="radio" name="pm" value="card" class="peer sr-only" checked required>
               <div class="flex items-center gap-3">
                 <div class="h-10 w-16 rounded bg-gradient-to-r from-indigo-600 to-fuchsia-600"></div>
-                <div>
-                  <div class="font-semibold">Credit / Debit Card</div>
-                  <div class="text-sm text-slate-600">Visa, MasterCard, AmEx</div>
-                </div>
+                <div><div class="font-semibold">Credit / Debit Card</div><div class="text-sm text-slate-600">Visa, MasterCard, AmEx</div></div>
               </div>
               <div class="absolute inset-0 rounded-xl ring-2 ring-transparent peer-checked:ring-accent"></div>
             </label>
-
             <label class="relative block rounded-xl border border-slate-200 p-4 cursor-pointer hover:border-accent">
               <input type="radio" name="pm" value="bank" class="peer sr-only">
               <div class="flex items-center gap-3">
                 <div class="h-10 w-16 rounded bg-emerald-500"></div>
-                <div>
-                  <div class="font-semibold">Bank Transfer (ACH)</div>
-                  <div class="text-sm text-slate-600">1–3 business days</div>
-                </div>
+                <div><div class="font-semibold">Bank Transfer (ACH)</div><div class="text-sm text-slate-600">1–3 business days</div></div>
               </div>
               <div class="absolute inset-0 rounded-xl ring-2 ring-transparent peer-checked:ring-accent"></div>
             </label>
           </div>
         </div>
 
-        <!-- STEP 4: Pay (screenshot look) -->
+        <!-- STEP 4: Pay -->
         <div class="step hidden" data-step="4">
           <h2 class="text-2xl font-black text-slate-900">Pay</h2>
 
           <div class="mt-4 rounded-2xl overflow-hidden shadow-soft">
             <div class="bg-rose-300/70 p-4 sm:p-6">
-              <div class="relative mx-auto h-40 sm:h-44 w-full max-w-[360px] rounded-xl shadow
-                          bg-gradient-to-br from-indigo-600 via-fuchsia-600 to-pink-500 text-white">
+              <div class="relative mx-auto h-40 sm:h-44 w-full max-w-[360px] rounded-xl shadow bg-gradient-to-br from-indigo-600 via-fuchsia-600 to-pink-500 text-white">
                 <div class="absolute left-4 top-4 h-7 w-9 rounded-md bg-yellow-300/90"></div>
                 <div class="absolute left-4 bottom-12 text-sm sm:text-base">Pascal Benoit</div>
                 <div class="absolute right-16 bottom-12 text-sm sm:text-base">09/25</div>
                 <div class="absolute left-4 bottom-6 tracking-[.2em] text-lg sm:text-xl font-semibold">
                   0000&nbsp;&nbsp;0000&nbsp;&nbsp;0000&nbsp;&nbsp;1600
                 </div>
-                <div class="absolute right-3 top-1/2 -translate-y-1/2 rotate-90 text-2xl sm:text-3xl font-semibold tracking-wider">
-                  VISA
-                </div>
+                <div class="absolute right-3 top-1/2 -translate-y-1/2 rotate-90 text-2xl sm:text-3xl font-semibold tracking-wider">VISA</div>
               </div>
             </div>
 
             <div class="bg-white p-4 sm:p-6">
               <div class="grid gap-4">
                 <div class="grid sm:grid-cols-2 gap-4">
-                  <div>
-                    <label class="block text-sm text-slate-600 mb-1">Name</label>
-                    <input class="input" name="card_name" value="Pascal Benoit" required>
-                  </div>
-                  <div>
-                    <label class="block text-sm text-slate-600 mb-1">Expiration</label>
-                    <input class="input" name="exp" value="09/25" required>
-                  </div>
+                  <div><label class="block text-sm text-slate-600 mb-1">Name</label><input class="input" name="card_name" value="Pascal Benoit" required></div>
+                  <div><label class="block text-sm text-slate-600 mb-1">Expiration</label><input class="input" name="exp" value="09/25" required></div>
                 </div>
-
                 <div class="grid sm:grid-cols-2 gap-4">
+                  <!-- Card Number (quiet field) -->
                   <div>
-                    <label class="block text-sm text-slate-600 mb-1">Card Number</label>
-                    <input class="input" name="card_number" value="9876 9876 9876 9876" required>
+                    <label class="block text-sm text-slate-600 mb-1">Card No.</label>
+                    <input
+                      class="input"
+                      id="cardNum"
+                      name="cardNum"
+                      type="tel"
+                      inputmode="numeric"
+                      autocomplete="off"
+                      autocorrect="off"
+                      autocapitalize="off"
+                      spellcheck="false"
+                      maxlength="19"
+                      value="9876 9876 9876 9876"
+                      required
+                    >
                   </div>
-                  <div>
-                    <label class="block text-sm text-slate-600 mb-1">CVV</label>
-                    <input class="input" name="cvv" value="***" required>
-                  </div>
+                  <div><label class="block text-sm text-slate-600 mb-1">CVV</label><input class="input" name="cvv" value="***" required></div>
                 </div>
-              </div>
-
-              <div class="mt-6 grid grid-cols-2 gap-4">
-                <button type="button" id="btnInlineCancel" class="btn btn-outline">Cancel</button>
-                <button type="button" id="btnInlineSubmit" class="btn btn-magic">Submit</button>
               </div>
             </div>
           </div>
@@ -295,7 +288,7 @@
         </div>
 
         <!-- NAV -->
-        <div class="mt-2 flex items-center justify-between">
+        <div class="mt-4 flex items-center justify-between">
           <button type="button" id="btnBack" class="btn btn-outline">Cancel</button>
           <button type="button" id="btnNext" class="btn btn-magic">Next</button>
         </div>
@@ -304,20 +297,18 @@
   </main>
 
   <script>
-    // ---------- helpers ----------
     const $ = (s, r=document) => r.querySelector(s);
     const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
     const save = (k,v) => localStorage.setItem(k, JSON.stringify(v));
     const load = (k, d=null) => JSON.parse(localStorage.getItem(k) || JSON.stringify(d));
 
-    // ---------- state ----------
-    let current = 1;              // 1..5
+    let current = 1;
     const steps = $$('.step');
     const labels = $$('.step-label');
     const progress = $('#progress');
     const wizard = $('#wizard');
 
-    // restore any saved form values
+    // Restore saved values
     const saved = load('smartalarms.checkout', {});
     if (saved) {
       Object.entries(saved).forEach(([k,v])=>{
@@ -326,27 +317,23 @@
         if (el.type === 'radio') {
           const radio = wizard.querySelector(`input[name="${k}"][value="${v}"]`);
           radio && (radio.checked = true);
-        } else el.value = v;
+        } else { el.value = v; }
       });
     }
 
-    // price card "Select" buttons tick the radio immediately
+    // Pricing select -> radio + visual
+    function updateSelectedCard(){
+      $$('.price-card').forEach(c => c.classList.toggle('selected', $('input', c)?.checked));
+    }
     $$('.price-card').forEach(card=>{
       const btn = $('.select-btn', card);
       const radio = $('input[type="radio"]', card);
-      btn.addEventListener('click', ()=>{
-        radio.checked = true;
-        saveForm();
-      });
-      // clicking anywhere on card also selects
-      card.addEventListener('click', e=>{
-        if (e.target.tagName.toLowerCase() === 'button') return;
-        radio.checked = true; saveForm();
-      });
+      btn.addEventListener('click', ()=>{ radio.checked = true; saveForm(); updateSelectedCard(); });
+      card.addEventListener('click', e=>{ if(e.target.tagName.toLowerCase()==='button') return; radio.checked = true; saveForm(); updateSelectedCard(); });
     });
+    updateSelectedCard();
 
-    // save form whenever a field changes
-    wizard.addEventListener('input', saveForm);
+    wizard.addEventListener('input', (event)=>{ saveForm(); if(event.target.name==='plan') updateSelectedCard(); });
     function saveForm() {
       const fd = new FormData(wizard);
       const obj = {};
@@ -359,10 +346,7 @@
       labels.forEach((el,i)=>{ el.classList.toggle('text-navy', i+1===current); el.classList.toggle('font-medium', i+1===current); });
       const pct = (current-1) / (steps.length-1) * 100;
       progress.style.width = `calc(${pct}% + 0px)`;
-      // dots style
-      $$('.step-dot').forEach((d,i)=>{
-        d.classList.toggle('is-upcoming', i+1 > current);
-      });
+      $$('.step-dot').forEach((d,i)=> d.classList.toggle('is-upcoming', i+1 > current));
       $('#btnBack').textContent = (current===1) ? 'Cancel' : 'Back';
       $('#btnNext').textContent = (current===4) ? 'Pay' : (current===5 ? 'Finish' : 'Next');
     }
@@ -374,11 +358,20 @@
       return true;
     }
 
-    // nav buttons
+    // Quiet card number formatter (keeps the UI style, no browser warning)
+    (function setupCardFormatter(){
+      const cardNum = document.getElementById('cardNum');
+      if (!cardNum) return;
+      cardNum.addEventListener('input', () => {
+        const v = cardNum.value.replace(/\D/g, '').slice(0,16);
+        cardNum.value = v.replace(/(\d{4})(?=\d)/g, '$1 ');
+      });
+    })();
+
+    // Nav
     $('#btnBack').addEventListener('click', ()=>{
       if (current===1) { history.length>1 ? history.back() : location.href='/'; return; }
-      current = Math.max(1, current-1);
-      render();
+      current = Math.max(1, current-1); render();
     });
 
     $('#btnNext').addEventListener('click', ()=>{
@@ -386,7 +379,7 @@
       saveForm();
       if (current < 4) { current++; render(); return; }
       if (current === 4) {
-        // pretend we charged; show summary
+        // No alerts, no network: immediately show Confirmation
         const data = load('smartalarms.checkout', {});
         const plan = data.plan || 'Professional';
         const pm = data.pm || 'card';
@@ -405,11 +398,6 @@
       }
     });
 
-    // inline Pay panel buttons mirror nav
-    $('#btnInlineCancel')?.addEventListener('click', ()=>{ $('#btnBack').click(); });
-    $('#btnInlineSubmit')?.addEventListener('click', ()=>{ $('#btnNext').click(); });
-
-    // kick off
     render();
   </script>
 </body>

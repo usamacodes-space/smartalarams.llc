@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Smart Alarms — Product</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: '#13334d',
+            brand: { 500: '#00bfe6', 700: '#009bb8' },
+          },
+          boxShadow: {
+            header: '0 12px 30px -10px rgba(0,0,0,.35)',
+            soft: '0 28px 70px -25px rgba(0,0,0,.18)',
+            card: '0 18px 40px -16px rgba(2, 6, 23, .18)',
+          },
+          borderRadius: { '3xl': '1.75rem' }
+        }
+      }
+    }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    body { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial; background:#eaf1f5; }
+
+    /* Buttons */
+    .btn { display:inline-flex; align-items:center; justify-content:center; font-weight:800; border-radius:9999px; padding:1rem 1.35rem; transition:all .22s ease; }
+    .btn:focus-visible { outline:none; box-shadow:0 0 0 4px rgba(0,191,230,.35); }
+    .btn-magic { color:#fff; background-image:linear-gradient(to bottom,#1f2937,#0f172a); box-shadow:0 18px 24px -18px rgba(0,0,0,.55),0 6px 18px -10px rgba(19,51,77,.45); border:1px solid rgba(255,255,255,.06); }
+    .btn-magic:hover { background-image:linear-gradient(to bottom,#00bfe6,#009bb8); transform:translateY(-2px); box-shadow:0 26px 46px -22px rgba(0,191,230,.55),0 12px 28px -16px rgba(0,155,184,.45); }
+    .btn-outline { background:#fff; color:#0f172a; border:1px solid #d7dee6; }
+    .btn-outline:hover { background:#f8fafc; }
+
+    /* Nav hover effects (same as pricing page) */
+    .navlink { position: relative; color: rgba(255,255,255,.86); transition: color .18s ease, text-shadow .18s ease; }
+    .navlink::after { content:""; position:absolute; left:0; right:0; bottom:-10px; height:2px; border-radius:2px; background:linear-gradient(90deg,#00bfe6,#009bb8); transform:scaleX(0); transform-origin:center; transition:transform .22s ease; opacity:.9; }
+    .navlink:hover { color:#9be8ff; text-shadow:0 0 12px rgba(0,191,230,.35); }
+    .navlink:hover::after { transform:scaleX(1); }
+    .navlink-active { color:#fff; border-bottom:2px solid #67e8f9; padding-bottom:2px; }
+    .navlink-active::after { display:none; }
+
+    /* Thumb selected ring */
+    .thumb.is-active { box-shadow: 0 0 0 2px #00bfe6 inset; }
+  </style>
+</head>
+
+<body class="bg-slate-100">
+
+  <!-- HEADER -->
+  <header class="fixed inset-x-0 top-0 z-40 backdrop-blur bg-gradient-to-b from-[#0c2536] to-[#15384d] text-white shadow-header">
+    <div class="mx-auto max-w-7xl px-4 lg:px-8 h-16 lg:h-20 flex items-center justify-between">
+      <a href="index.html" class="flex items-baseline gap-2">
+        <span class="text-2xl lg:text-3xl font-extrabold tracking-wide">SMART</span>
+        <span class="text-2xl lg:text-3xl font-extrabold tracking-wide text-cyan-300">ALARMS</span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-7 text-[15px]">
+        <a class="navlink" href="index.html">Home</a>
+        <a class="navlink" href="pay-online.html">Pay Online</a>
+        <a class="navlink" href="security-packages.html">Security Packages</a>
+        <a class="navlink navlink-active" href="medical-pendant.html">Medical Pendant</a>
+        <a class="navlink" href="about.html">About Us</a>
+        <a class="navlink" href="contact.html">Contact</a>
+      </nav>
+
+      <a href="quote.html" class="btn btn-magic rounded-2xl hidden sm:inline-flex">Get a Quote</a>
+    </div>
+  </header>
+
+  <main class="pt-24 lg:pt-28">
+    <div class="mx-auto max-w-7xl px-4 lg:px-8">
+
+      <!-- Breadcrumbs -->
+      <nav class="text-sm text-slate-600 mb-4 flex flex-wrap gap-2">
+        <a class="hover:underline" href="#">Home</a><span>›</span>
+        <a class="hover:underline" href="#">Protection</a><span>›</span>
+        <a class="hover:underline" href="#">Snowboard Helmets</a>
+      </nav>
+
+      <!-- PRODUCT GRID -->
+      <section class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+
+        <!-- Left: Gallery -->
+        <div class="rounded-3xl bg-white border border-slate-200 shadow-card p-4 sm:p-6 lg:p-8">
+          <div class="aspect-square w-full bg-slate-50 rounded-2xl overflow-hidden flex items-center justify-center">
+            <!-- Main image -->
+            <img id="mainImg" src="https://images.unsplash.com/photo-1571169779845-6f5c2b7b1b2b?q=80&w=1200&auto=format&fit=crop" alt="Product" class="max-h-full object-contain">
+          </div>
+
+          <!-- Thumbnails -->
+          <div class="mt-4 grid grid-cols-4 gap-3">
+            <button class="thumb is-active rounded-xl overflow-hidden bg-slate-50 p-2 transition hover:scale-[1.02]">
+              <img data-src="https://images.unsplash.com/photo-1571169779845-6f5c2b7b1b2b?q=80&w=1200&auto=format&fit=crop" alt="thumb1" class="w-full h-16 object-contain">
+            </button>
+            <button class="thumb rounded-xl overflow-hidden bg-slate-50 p-2 transition hover:scale-[1.02]">
+              <img data-src="https://images.unsplash.com/photo-1604160439507-4f1c1f717a8e?q=80&w=1200&auto=format&fit=crop" alt="thumb2" class="w-full h-16 object-contain">
+            </button>
+            <button class="thumb rounded-xl overflow-hidden bg-slate-50 p-2 transition hover:scale-[1.02]">
+              <img data-src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=1200&auto=format&fit=crop" alt="thumb3" class="w-full h-16 object-contain">
+            </button>
+            <button class="thumb rounded-xl overflow-hidden bg-slate-50 p-2 transition hover:scale-[1.02]">
+              <img data-src="https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=1200&auto=format&fit=crop" alt="thumb4" class="w-full h-16 object-contain">
+            </button>
+          </div>
+        </div>
+
+        <!-- Right: Details -->
+        <div class="rounded-3xl bg-white border border-slate-200 shadow-card p-5 sm:p-7 lg:p-9">
+          <div class="flex items-center gap-2 mb-2">
+            <div class="flex text-amber-400 text-lg">★ ★ ★ ★ ☆</div>
+            <a href="#reviews" class="text-sm text-slate-500 hover:underline">(37 reviews)</a>
+          </div>
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Snow Helmet Sweet Protection</h1>
+
+          <div class="mt-3 flex items-end gap-3">
+            <div class="text-3xl font-black text-slate-900">$88.9</div>
+            <div class="text-slate-400 line-through">$98.1</div>
+          </div>
+
+          <!-- Tabs -->
+          <div class="mt-6 border-b border-slate-200">
+            <nav class="flex gap-2 text-sm font-semibold">
+              <button data-tab="details" class="tabBtn px-4 py-2 rounded-t-xl bg-slate-100 text-slate-900">Details</button>
+              <button data-tab="features" class="tabBtn px-4 py-2 rounded-t-xl text-slate-600 hover:bg-slate-100">Features</button>
+              <button data-tab="shipping" class="tabBtn px-4 py-2 rounded-t-xl text-slate-600 hover:bg-slate-100">Shipping</button>
+              <button data-tab="reviews" class="tabBtn px-4 py-2 rounded-t-xl text-slate-600 hover:bg-slate-100">Reviews</button>
+            </nav>
+          </div>
+
+          <!-- Tab panels -->
+          <div class="mt-4 text-sm text-slate-700 space-y-6">
+            <div data-panel="details">
+              <p><strong>Description:</strong></p>
+              <p class="mt-1">Our original ventilated visor helmet delivers comfort and safety with multiple configuration options to fit your ride—snow or bike—across all seasons.</p>
+            </div>
+
+            <div data-panel="features" class="hidden">
+              <ul class="list-disc pl-5 space-y-1">
+                <li>Lightweight ABS shell</li>
+                <li>Multi-impact certified EPS liner</li>
+                <li>Magnetic buckle with padded strap</li>
+                <li>Removable ear pads &amp; washable liner</li>
+              </ul>
+            </div>
+
+            <div data-panel="shipping" class="hidden">
+              <p>Ships within 24–48 hours via tracked courier. Free returns within 30 days.</p>
+            </div>
+
+            <div id="reviews" data-panel="reviews" class="hidden">
+              <p>Average 4.2/5 from 37 verified buyers.</p>
+            </div>
+          </div>
+
+          <!-- Size -->
+          <div class="mt-6">
+            <div class="text-sm font-semibold text-slate-900">Size:</div>
+            <div class="mt-2 flex flex-wrap gap-2">
+              <button class="size-pill px-3 py-1.5 rounded-xl border border-slate-300 text-sm">XS</button>
+              <button class="size-pill px-3 py-1.5 rounded-xl border border-slate-300 text-sm is-active">S</button>
+              <button class="size-pill px-3 py-1.5 rounded-xl border border-slate-300 text-sm">M</button>
+              <button class="size-pill px-3 py-1.5 rounded-xl border border-slate-300 text-sm">L</button>
+            </div>
+          </div>
+
+          <!-- Color -->
+          <div class="mt-5">
+            <div class="text-sm font-semibold text-slate-900">Color: <span id="colorLabel" class="font-normal text-slate-700">sky blue</span></div>
+            <div class="mt-2 flex items-center gap-3">
+              <!-- color dots -->
+              <button class="clr w-6 h-6 rounded-full border border-slate-300" style="background:#1e293b" aria-label="navy"></button>
+              <button class="clr w-6 h-6 rounded-full border border-slate-300 ring-2 ring-brand-500" style="background:#22c1f1" aria-label="sky blue"></button>
+              <button class="clr w-6 h-6 rounded-full border border-slate-300" style="background:#ef4444" aria-label="red"></button>
+              <button class="clr w-6 h-6 rounded-full border border-slate-300" style="background:#f59e0b" aria-label="amber"></button>
+            </div>
+          </div>
+
+          <!-- Quantity -->
+          <div class="mt-5">
+            <div class="text-sm font-semibold text-slate-900">Quantity:</div>
+            <div class="mt-2 inline-flex items-center rounded-xl border border-slate-300 overflow-hidden">
+              <button id="qMinus" class="px-3 py-1 text-slate-700 hover:bg-slate-100">−</button>
+              <input id="qty" value="1" class="w-12 text-center py-1 outline-none" />
+              <button id="qPlus" class="px-3 py-1 text-slate-700 hover:bg-slate-100">+</button>
+            </div>
+          </div>
+
+          <!-- Scarcity note -->
+          <p class="mt-4 text-sm text-rose-600">Hurry up, only <strong>1 item</strong> left!</p>
+
+          <!-- CTA buttons -->
+          <div class="mt-5 flex flex-col sm:flex-row gap-3">
+            <button class="btn btn-magic w-full sm:w-auto">Buy now</button>
+            <button class="btn btn-outline w-full sm:w-auto">Add to cart</button>
+            <button class="btn btn-outline w-full sm:w-auto" title="Add to wishlist">♡</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Spacer -->
+      <div class="h-12"></div>
+    </div>
+  </main>
+
+  <script>
+    // Gallery thumbs -> main image
+    const mainImg = document.getElementById('mainImg');
+    document.querySelectorAll('.thumb').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.thumb').forEach(b => b.classList.remove('is-active'));
+        btn.classList.add('is-active');
+        const img = btn.querySelector('img');
+        const src = img.getAttribute('data-src');
+        mainImg.src = src;
+      });
+    });
+
+    // Tabs
+    const tabs = document.querySelectorAll('.tabBtn');
+    const panels = document.querySelectorAll('[data-panel]');
+    tabs.forEach(t => {
+      t.addEventListener('click', () => {
+        tabs.forEach(x => x.classList.remove('bg-slate-100','text-slate-900'));
+        t.classList.add('bg-slate-100','text-slate-900');
+        const id = t.getAttribute('data-tab');
+        panels.forEach(p => p.classList.toggle('hidden', p.getAttribute('data-panel') !== id));
+      });
+    });
+
+    // Size pills active state
+    document.querySelectorAll('.size-pill').forEach(p => {
+      p.addEventListener('click', () => {
+        document.querySelectorAll('.size-pill').forEach(x => x.classList.remove('is-active','border-brand-500','text-brand-700'));
+        p.classList.add('is-active','border-brand-500','text-brand-700');
+      });
+    });
+
+    // Colors
+    const colorLabel = document.getElementById('colorLabel');
+    document.querySelectorAll('.clr').forEach(dot => {
+      dot.addEventListener('click', () => {
+        document.querySelectorAll('.clr').forEach(x => x.style.boxShadow = 'none');
+        dot.style.boxShadow = '0 0 0 3px rgba(0,191,230,.6)';
+        colorLabel.textContent = dot.getAttribute('aria-label');
+      });
+    });
+
+    // Quantity
+    const qty = document.getElementById('qty');
+    document.getElementById('qMinus').addEventListener('click', () => qty.value = Math.max(1, (parseInt(qty.value)||1) - 1));
+    document.getElementById('qPlus').addEventListener('click', () => qty.value = (parseInt(qty.value)||1) + 1);
+  </script>
+</body>
+</html>

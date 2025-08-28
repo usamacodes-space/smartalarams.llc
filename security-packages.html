@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Smart Alarms — Pricing Plans</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: '#13334d',
+            brand: { 500: '#00bfe6', 700: '#009bb8' },
+          },
+          boxShadow: {
+            header: '0 12px 30px -10px rgba(0,0,0,.35)',
+            soft: '0 28px 70px -25px rgba(0,0,0,.18)',
+            card: '0 18px 40px -16px rgba(2, 6, 23, .18)',
+          },
+          borderRadius: { '3xl': '1.75rem' }
+        }
+      }
+    }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial; background:#eaf1f5; }
+
+    /* Buttons */
+    .btn { display:inline-flex; align-items:center; justify-content:center; font-weight:800; border-radius:9999px; padding:1rem 1.35rem; transition:all .22s ease; }
+    .btn:focus-visible { outline:none; box-shadow:0 0 0 4px rgba(0,191,230,.35); }
+    .btn-magic { color:#fff; background-image:linear-gradient(to bottom,#1f2937,#0f172a); box-shadow:0 18px 24px -18px rgba(0,0,0,.55),0 6px 18px -10px rgba(19,51,77,.45); border:1px solid rgba(255,255,255,.06); }
+    .btn-magic:hover { background-image:linear-gradient(to bottom,#00bfe6,#009bb8); transform:translateY(-2px); box-shadow:0 26px 46px -22px rgba(0,191,230,.55),0 12px 28px -16px rgba(0,155,184,.45); }
+    .btn-outline { background:#fff; color:#0f172a; border:1px solid #d7dee6; }
+    .btn-outline:hover { background:#f8fafc; }
+
+    /* floating “Most popular” chip */
+    .chip { position:absolute; top:-18px; left:50%; transform:translateX(-50%); }
+
+    /* ---- NAV HOVER EFFECTS ---- */
+    .navlink {
+      position: relative;
+      color: rgba(255,255,255,.86);
+      transition: color .18s ease, text-shadow .18s ease;
+    }
+    .navlink::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -10px;
+      height: 2px;
+      border-radius: 2px;
+      background: linear-gradient(90deg, #00bfe6, #009bb8);
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform .22s ease;
+      opacity: .9;
+    }
+    .navlink:hover {
+      color: #9be8ff;              /* soft cyan tint */
+      text-shadow: 0 0 12px rgba(0,191,230,.35);
+    }
+    .navlink:hover::after { transform: scaleX(1); }
+
+    /* Keep active item looking “selected” and don’t double-underline on hover */
+    .navlink-active {
+      color: #fff;
+      border-bottom-width: 2px;
+      border-color: #67e8f9; /* Tailwind’s cyan-300-ish */
+      padding-bottom: 2px;
+    }
+    .navlink-active::after { display: none; }
+  </style>
+</head>
+
+<body class="bg-slate-100 overflow-hidden">
+
+  <!-- HEADER -->
+  <header class="fixed inset-x-0 top-0 z-40 backdrop-blur bg-gradient-to-b from-[#0c2536] to-[#15384d] text-white shadow-header">
+    <div class="mx-auto max-w-7xl px-4 lg:px-8 h-16 lg:h-20 flex items-center justify-between">
+      <a href="index.html" class="flex items-baseline gap-2">
+        <span class="text-2xl lg:text-3xl font-extrabold tracking-wide">SMART</span>
+        <span class="text-2xl lg:text-3xl font-extrabold tracking-wide text-cyan-300">ALARMS</span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-7 text-[15px]">
+        <a class="navlink" href="index.html">Home</a>
+        <a class="navlink" href="pay-online.html">Pay Online</a>
+        <a class="navlink navlink-active" href="#">Security Packages</a>
+        <a class="navlink" href="medical-pendant.html">Medical Pendant</a>
+        <a class="navlink" href="about.html">About Us</a>
+        <a class="navlink" href="contact.html">Contact</a>
+      </nav>
+
+      <a href="quote.html" class="btn btn-magic rounded-2xl hidden sm:inline-flex">Get a Quote</a>
+    </div>
+  </header>
+
+  <main class="pt-20 lg:pt-24">
+    <div class="mx-auto max-w-7xl px-4 lg:px-8">
+
+      <!-- Title + Toggle -->
+      <section class="mt-2 mb-4 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+        <div>
+          <h1 class="text-[34px] sm:text-[40px] lg:text-[46px] font-extrabold text-slate-900 tracking-tight">Pricing Plans</h1>
+          <p class="mt-1 text-slate-600">Impressive features to help your company scale rapidly</p>
+        </div>
+
+        <!-- toggle -->
+        <div class="flex items-center gap-4">
+          <span class="text-slate-700 font-medium">Bill Monthly</span>
+          <label class="inline-flex items-center cursor-pointer select-none">
+            <input id="billToggle" type="checkbox" class="peer sr-only">
+            <span class="w-12 h-7 bg-slate-300 rounded-full relative transition-colors
+                         after:content-[''] after:w-5 after:h-5 after:bg-white after:rounded-full
+                         after:absolute after:top-1 after:left-1 after:transition-all
+                         peer-checked:after:left-6 peer-checked:bg-sky-400"></span>
+          </label>
+          <span class="text-slate-700 font-medium">
+            Bill Annually <span class="text-emerald-600 font-semibold">(10% off)</span>
+          </span>
+        </div>
+      </section>
+
+      <!-- PRICING GRID -->
+      <section class="mt-1">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-7 lg:gap-8 items-start">
+
+          <!-- Free -->
+          <article class="rounded-3xl bg-white border border-slate-200/70 shadow-card overflow-hidden flex flex-col">
+            <div class="p-8 lg:p-10">
+              <h3 class="text-[28px] lg:text-[30px] font-extrabold text-slate-900">Free</h3>
+              <p class="mt-2 text-slate-600">Free Plan for all users.</p>
+              <div class="mt-6 text-6xl font-black text-slate-900">
+                <span id="price-free">$0</span>
+                <span class="text-lg font-bold text-slate-500" data-per>/month</span>
+              </div>
+            </div>
+            <div class="px-8 lg:px-10 pb-8 -mt-2">
+              <button class="btn btn-outline w-full">Get Started</button>
+              <ul class="mt-6 space-y-3.5 text-slate-700">
+                <li>✔ 2 Workspaces</li>
+                <li>✔ 10 Collaborators</li>
+                <li>✔ Unlimited data</li>
+                <li>✔ Unified Analytics</li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- Pro (Most popular) -->
+          <article class="rounded-3xl bg-white border border-sky-200 shadow-card overflow-visible flex flex-col relative ring-2 ring-sky-300/80">
+            <!-- centered chip (outside the top edge) -->
+            <div class="chip">
+              <span class="bg-emerald-100 text-emerald-700 rounded-full px-3 py-1 text-xs font-semibold shadow">
+                Most popular
+              </span>
+            </div>
+
+            <div class="p-8 lg:p-10">
+              <h3 class="text-[28px] lg:text-[30px] font-extrabold text-slate-900">Pro</h3>
+              <p class="mt-2 text-slate-600">Ideal for small businesses.</p>
+              <div class="mt-6 text-6xl font-black text-slate-900">
+                <span id="price-pro">$18</span>
+                <span class="text-lg font-bold text-slate-500" data-per>/month</span>
+              </div>
+            </div>
+            <div class="px-8 lg:px-10 pb-8 -mt-2">
+              <button class="btn btn-magic w-full">Get Started</button>
+              <ul class="mt-6 space-y-3.5 text-slate-700">
+                <li>✔ Unlimited workspaces</li>
+                <li>✔ Unlimited collaboration</li>
+                <li>✔ 15 GB data storage</li>
+                <li>✔ Mobile app access</li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- Enterprise -->
+          <article class="rounded-3xl bg-white border border-slate-200/70 shadow-card overflow-hidden flex flex-col">
+            <div class="p-8 lg:p-10">
+              <h3 class="text-[28px] lg:text-[30px] font-extrabold text-slate-900">Enterprise</h3>
+              <p class="mt-2 text-slate-600">Works best for enterprise companies.</p>
+              <div class="mt-6 text-6xl font-black text-slate-900">
+                <span id="price-ent">$30</span>
+                <span class="text-lg font-bold text-slate-500" data-per>/month</span>
+              </div>
+            </div>
+            <div class="px-8 lg:px-10 pb-8 -mt-2">
+              <button class="btn btn-outline w-full">Get Started</button>
+              <ul class="mt-6 space-y-3.5 text-slate-700">
+                <li>✔ Unlimited workspaces</li>
+                <li>✔ Unlimited collaboration</li>
+                <li>✔ 60 GB data storage</li>
+                <li>✔ Mobile app access</li>
+              </ul>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- tighter bottom breathing room so the whole section fits under 1440px -->
+        <div class="h-10 lg:h-12"></div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    // Billing toggle: monthly/yearly switch
+    const prices = { pro: 18, ent: 30 };
+    const els = { pro: document.getElementById('price-pro'), ent: document.getElementById('price-ent') };
+    const toggle = document.getElementById('billToggle');
+
+    function updatePrices(yearly) {
+      const calc = m => yearly ? Math.round(m * 12 * 0.9) : m;
+      els.pro.textContent = yearly ? `$${calc(prices.pro)}` : `$${prices.pro}`;
+      els.ent.textContent = yearly ? `$${calc(prices.ent)}` : `$${prices.ent}`;
+      document.querySelectorAll('[data-per]').forEach(n => n.textContent = yearly ? '/year' : '/month');
+    }
+    toggle?.addEventListener('change', e => updatePrices(e.target.checked));
+  </script>
+</body>
+</html>
+

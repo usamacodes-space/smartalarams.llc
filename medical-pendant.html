@@ -34,14 +34,14 @@
     body { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial; background:#eaf1f5; }
 
     /* Buttons */
-    .btn { display:inline-flex; align-items:center; justify-content:center; font-weight:800; border-radius:9999px; padding:1rem 1.35rem; transition:all .22s ease; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; font-weight:800; border-radius:9999px; padding:.9rem 1.15rem; transition:all .22s ease; }
     .btn:focus-visible { outline:none; box-shadow:0 0 0 4px rgba(0,191,230,.35); }
     .btn-magic { color:#fff; background-image:linear-gradient(to bottom,#1f2937,#0f172a); box-shadow:0 18px 24px -18px rgba(0,0,0,.55),0 6px 18px -10px rgba(19,51,77,.45); border:1px solid rgba(255,255,255,.06); }
     .btn-magic:hover { background-image:linear-gradient(to bottom,#00bfe6,#009bb8); transform:translateY(-2px); box-shadow:0 26px 46px -22px rgba(0,191,230,.55),0 12px 28px -16px rgba(0,155,184,.45); }
     .btn-outline { background:#fff; color:#0f172a; border:1px solid #d7dee6; }
     .btn-outline:hover { background:#f8fafc; }
 
-    /* Nav hover effects (same as pricing page) */
+    /* Nav hover effects */
     .navlink { position: relative; color: rgba(255,255,255,.86); transition: color .18s ease, text-shadow .18s ease; }
     .navlink::after { content:""; position:absolute; left:0; right:0; bottom:-10px; height:2px; border-radius:2px; background:linear-gradient(90deg,#00bfe6,#009bb8); transform:scaleX(0); transform-origin:center; transition:transform .22s ease; opacity:.9; }
     .navlink:hover { color:#9be8ff; text-shadow:0 0 12px rgba(0,191,230,.35); }
@@ -51,34 +51,66 @@
 
     /* Thumb selected ring */
     .thumb.is-active { box-shadow: 0 0 0 2px #00bfe6 inset; }
+
+    @media (prefers-reduced-motion: reduce) { .btn, .navlink::after { transition: none; } }
   </style>
 </head>
 
-<body class="bg-slate-100">
+<body class="bg-slate-100 overflow-x-hidden">
+  <!-- SCRIM -->
+  <div id="scrim" class="fixed inset-0 bg-black/40 opacity-0 pointer-events-none transition-opacity z-40"></div>
+
+  <!-- MOBILE MENU DRAWER (right side) -->
+  <aside id="mobileMenu" class="fixed top-0 right-0 h-full w-80 max-w-[86vw] translate-x-full transition-transform z-50 bg-gradient-to-b from-[#0c2536] to-[#15384d] text-white shadow-2xl">
+    <div class="px-5 py-4 flex items-center justify-between border-b border-white/10">
+      <a href="index.html" class="flex items-baseline gap-2">
+        <span class="text-2xl font-extrabold tracking-wide">SMART</span>
+        <span class="text-2xl font-extrabold tracking-wide text-cyan-300">ALARMS</span>
+      </a>
+      <button id="closeMenu" aria-label="Close menu" class="p-2 rounded-xl hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-cyan-300">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <nav class="px-5 py-3">
+      <a class="block py-3 navlink" href="index.html">Home</a>
+      <a class="block py-3 navlink" href="pay-online.html">Pay Online</a>
+      <a class="block py-3 navlink" href="security-packages.html">Security Packages</a>
+      <a class="block py-3 navlink navlink-active" href="medical-pendant.html">Medical Pendant</a>
+      <a class="block py-3 navlink" href="about.html">About Us</a>
+      <a class="block py-3 navlink" href="contact.html">Contact</a>
+    </nav>
+    <div class="px-5 py-4 border-t border-white/10">
+      <a href="quote.html" class="btn btn-magic w-full rounded-2xl">Get a Quote</a>
+    </div>
+  </aside>
 
   <!-- HEADER -->
-  <header class="fixed inset-x-0 top-0 z-40 backdrop-blur bg-gradient-to-b from-[#0c2536] to-[#15384d] text-white shadow-header">
-    <div class="mx-auto max-w-7xl px-4 lg:px-8 h-16 lg:h-20 flex items-center justify-between">
+  <header class="fixed inset-x-0 top-0 z-30 backdrop-blur bg-gradient-to-b from-[#0c2536] to-[#15384d] text-white shadow-header">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 lg:h-20 flex items-center justify-between">
       <a href="index.html" class="flex items-baseline gap-2">
         <span class="text-2xl lg:text-3xl font-extrabold tracking-wide">SMART</span>
         <span class="text-2xl lg:text-3xl font-extrabold tracking-wide text-cyan-300">ALARMS</span>
       </a>
 
-      <nav class="hidden md:flex items-center gap-7 text-[15px]">
-        <a class="navlink" href="index.html">Home</a>
-        <a class="navlink" href="pay-online.html">Pay Online</a>
-        <a class="navlink" href="security-packages.html">Security Packages</a>
-        <a class="navlink navlink-active" href="medical-pendant.html">Medical Pendant</a>
-        <a class="navlink" href="about.html">About Us</a>
-        <a class="navlink" href="contact.html">Contact</a>
-      </nav>
-
-      <a href="quote.html" class="btn btn-magic rounded-2xl hidden sm:inline-flex">Get a Quote</a>
+      <div class="flex items-center gap-3">
+        <nav class="hidden md:flex items-center gap-6 lg:gap-7 text-[15px]">
+          <a class="navlink" href="index.html">Home</a>
+          <a class="navlink" href="pay-online.html">Pay Online</a>
+          <a class="navlink" href="security-packages.html">Security Packages</a>
+          <a class="navlink navlink-active" href="medical-pendant.html">Medical Pendant</a>
+          <a class="navlink" href="about.html">About Us</a>
+          <a class="navlink" href="contact.html">Contact</a>
+        </nav>
+        <!-- Mobile menu button on the RIGHT -->
+        <button id="menuBtn" class="md:hidden p-2 rounded-xl hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-cyan-300" aria-label="Open menu" aria-controls="mobileMenu" aria-expanded="false">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
     </div>
   </header>
 
-  <main class="pt-24 lg:pt-28">
-    <div class="mx-auto max-w-7xl px-4 lg:px-8">
+  <main class="pt-20 lg:pt-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
       <!-- Breadcrumbs -->
       <nav class="text-sm text-slate-600 mb-4 flex flex-wrap gap-2">
@@ -88,48 +120,50 @@
       </nav>
 
       <!-- PRODUCT GRID -->
-      <section class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+      <section class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10">
 
         <!-- Left: Gallery -->
         <div class="rounded-3xl bg-white border border-slate-200 shadow-card p-4 sm:p-6 lg:p-8">
           <div class="aspect-square w-full bg-slate-50 rounded-2xl overflow-hidden flex items-center justify-center">
-            <!-- Main image -->
             <img id="mainImg" src="https://images.unsplash.com/photo-1571169779845-6f5c2b7b1b2b?q=80&w=1200&auto=format&fit=crop" alt="Product" class="max-h-full object-contain">
           </div>
 
-          <!-- Thumbnails -->
-          <div class="mt-4 grid grid-cols-4 gap-3">
-            <button class="thumb is-active rounded-xl overflow-hidden bg-slate-50 p-2 transition hover:scale-[1.02]">
-              <img data-src="https://images.unsplash.com/photo-1571169779845-6f5c2b7b1b2b?q=80&w=1200&auto=format&fit=crop" alt="thumb1" class="w-full h-16 object-contain">
-            </button>
-            <button class="thumb rounded-xl overflow-hidden bg-slate-50 p-2 transition hover:scale-[1.02]">
-              <img data-src="https://images.unsplash.com/photo-1604160439507-4f1c1f717a8e?q=80&w=1200&auto=format&fit=crop" alt="thumb2" class="w-full h-16 object-contain">
-            </button>
-            <button class="thumb rounded-xl overflow-hidden bg-slate-50 p-2 transition hover:scale-[1.02]">
-              <img data-src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=1200&auto=format&fit=crop" alt="thumb3" class="w-full h-16 object-contain">
-            </button>
-            <button class="thumb rounded-xl overflow-hidden bg-slate-50 p-2 transition hover:scale-[1.02]">
-              <img data-src="https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=1200&auto=format&fit=crop" alt="thumb4" class="w-full h-16 object-contain">
-            </button>
+          <!-- Thumbnails: mobile horizontal scroll, desktop grid -->
+          <div class="mt-4 -mx-4 px-4 lg:mx-0 lg:px-0">
+            <div class="flex gap-3 overflow-x-auto lg:grid lg:grid-cols-4 lg:overflow-visible snap-x snap-mandatory">
+              <style>.thumb-card{min-width:28%;scroll-snap-align:start}@media(min-width:420px){.thumb-card{min-width:22%}}</style>
+              <button class="thumb thumb-card is-active rounded-xl overflow-hidden bg-slate-50 p-2 transition hover:scale-[1.02]">
+                <img data-src="https://images.unsplash.com/photo-1571169779845-6f5c2b7b1b2b?q=80&w=1200&auto=format&fit=crop" alt="thumb1" class="w-full h-16 object-contain">
+              </button>
+              <button class="thumb thumb-card rounded-xl overflow-hidden bg-slate-50 p-2 transition hover:scale-[1.02]">
+                <img data-src="https://images.unsplash.com/photo-1604160439507-4f1c1f717a8e?q=80&w=1200&auto=format&fit=crop" alt="thumb2" class="w-full h-16 object-contain">
+              </button>
+              <button class="thumb thumb-card rounded-xl overflow-hidden bg-slate-50 p-2 transition hover:scale-[1.02]">
+                <img data-src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=1200&auto=format&fit=crop" alt="thumb3" class="w-full h-16 object-contain">
+              </button>
+              <button class="thumb thumb-card rounded-xl overflow-hidden bg-slate-50 p-2 transition hover:scale-[1.02]">
+                <img data-src="https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=1200&auto=format&fit=crop" alt="thumb4" class="w-full h-16 object-contain">
+              </button>
+            </div>
           </div>
         </div>
 
         <!-- Right: Details -->
         <div class="rounded-3xl bg-white border border-slate-200 shadow-card p-5 sm:p-7 lg:p-9">
-          <div class="flex items-center gap-2 mb-2">
+          <div class="flex flex-wrap items-center gap-2 mb-2">
             <div class="flex text-amber-400 text-lg">★ ★ ★ ★ ☆</div>
             <a href="#reviews" class="text-sm text-slate-500 hover:underline">(37 reviews)</a>
           </div>
-          <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Snow Helmet Sweet Protection</h1>
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 leading-tight">Snow Helmet Sweet Protection</h1>
 
           <div class="mt-3 flex items-end gap-3">
-            <div class="text-3xl font-black text-slate-900">$88.9</div>
+            <div class="text-3xl font-black text-slate-900 tabular-nums">$88.9</div>
             <div class="text-slate-400 line-through">$98.1</div>
           </div>
 
-          <!-- Tabs -->
-          <div class="mt-6 border-b border-slate-200">
-            <nav class="flex gap-2 text-sm font-semibold">
+          <!-- Tabs: scrollable on mobile -->
+          <div class="mt-6 border-b border-slate-200 overflow-x-auto">
+            <nav class="flex gap-2 text-sm font-semibold min-w-max">
               <button data-tab="details" class="tabBtn px-4 py-2 rounded-t-xl bg-slate-100 text-slate-900">Details</button>
               <button data-tab="features" class="tabBtn px-4 py-2 rounded-t-xl text-slate-600 hover:bg-slate-100">Features</button>
               <button data-tab="shipping" class="tabBtn px-4 py-2 rounded-t-xl text-slate-600 hover:bg-slate-100">Shipping</button>
@@ -143,7 +177,6 @@
               <p><strong>Description:</strong></p>
               <p class="mt-1">Our original ventilated visor helmet delivers comfort and safety with multiple configuration options to fit your ride—snow or bike—across all seasons.</p>
             </div>
-
             <div data-panel="features" class="hidden">
               <ul class="list-disc pl-5 space-y-1">
                 <li>Lightweight ABS shell</li>
@@ -152,11 +185,9 @@
                 <li>Removable ear pads &amp; washable liner</li>
               </ul>
             </div>
-
             <div data-panel="shipping" class="hidden">
               <p>Ships within 24–48 hours via tracked courier. Free returns within 30 days.</p>
             </div>
-
             <div id="reviews" data-panel="reviews" class="hidden">
               <p>Average 4.2/5 from 37 verified buyers.</p>
             </div>
@@ -177,7 +208,6 @@
           <div class="mt-5">
             <div class="text-sm font-semibold text-slate-900">Color: <span id="colorLabel" class="font-normal text-slate-700">sky blue</span></div>
             <div class="mt-2 flex items-center gap-3">
-              <!-- color dots -->
               <button class="clr w-6 h-6 rounded-full border border-slate-300" style="background:#1e293b" aria-label="navy"></button>
               <button class="clr w-6 h-6 rounded-full border border-slate-300 ring-2 ring-brand-500" style="background:#22c1f1" aria-label="sky blue"></button>
               <button class="clr w-6 h-6 rounded-full border border-slate-300" style="background:#ef4444" aria-label="red"></button>
@@ -189,9 +219,9 @@
           <div class="mt-5">
             <div class="text-sm font-semibold text-slate-900">Quantity:</div>
             <div class="mt-2 inline-flex items-center rounded-xl border border-slate-300 overflow-hidden">
-              <button id="qMinus" class="px-3 py-1 text-slate-700 hover:bg-slate-100">−</button>
-              <input id="qty" value="1" class="w-12 text-center py-1 outline-none" />
-              <button id="qPlus" class="px-3 py-1 text-slate-700 hover:bg-slate-100">+</button>
+              <button id="qMinus" class="px-3 py-1 text-slate-700 hover:bg-slate-100" aria-label="decrease">−</button>
+              <input id="qty" value="1" inputmode="numeric" class="w-12 text-center py-1 outline-none" />
+              <button id="qPlus" class="px-3 py-1 text-slate-700 hover:bg-slate-100" aria-label="increase">+</button>
             </div>
           </div>
 
@@ -202,18 +232,42 @@
           <div class="mt-5 flex flex-col sm:flex-row gap-3">
             <button class="btn btn-magic w-full sm:w-auto">Buy now</button>
             <button class="btn btn-outline w-full sm:w-auto">Add to cart</button>
-            <button class="btn btn-outline w-full sm:w-auto" title="Add to wishlist">♡</button>
+            <button class="btn btn-outline w-full sm:w-auto" title="Add to wishlist" aria-label="Add to wishlist">♡</button>
           </div>
         </div>
       </section>
 
-      <!-- Spacer -->
-      <div class="h-12"></div>
+      <div class="h-10 lg:h-12"></div>
     </div>
   </main>
 
   <script>
-    // Gallery thumbs -> main image
+    // ===== Mobile menu =====
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const closeMenu = document.getElementById('closeMenu');
+    const scrim = document.getElementById('scrim');
+
+    function openDrawer() {
+      mobileMenu.style.transform = 'translateX(0)';
+      scrim.style.opacity = '1';
+      scrim.style.pointerEvents = 'auto';
+      menuBtn.setAttribute('aria-expanded', 'true');
+      document.body.classList.add('overflow-hidden');
+    }
+    function closeDrawer() {
+      mobileMenu.style.transform = 'translateX(100%)';
+      scrim.style.opacity = '0';
+      scrim.style.pointerEvents = 'none';
+      menuBtn.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('overflow-hidden');
+    }
+    menuBtn?.addEventListener('click', openDrawer);
+    closeMenu?.addEventListener('click', closeDrawer);
+    scrim?.addEventListener('click', closeDrawer);
+    window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeDrawer(); });
+
+    // ===== Gallery thumbs -> main image =====
     const mainImg = document.getElementById('mainImg');
     document.querySelectorAll('.thumb').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -225,7 +279,7 @@
       });
     });
 
-    // Tabs
+    // ===== Tabs =====
     const tabs = document.querySelectorAll('.tabBtn');
     const panels = document.querySelectorAll('[data-panel]');
     tabs.forEach(t => {
@@ -237,7 +291,7 @@
       });
     });
 
-    // Size pills active state
+    // ===== Size pills active state =====
     document.querySelectorAll('.size-pill').forEach(p => {
       p.addEventListener('click', () => {
         document.querySelectorAll('.size-pill').forEach(x => x.classList.remove('is-active','border-brand-500','text-brand-700'));
@@ -245,7 +299,7 @@
       });
     });
 
-    // Colors
+    // ===== Colors =====
     const colorLabel = document.getElementById('colorLabel');
     document.querySelectorAll('.clr').forEach(dot => {
       dot.addEventListener('click', () => {
@@ -255,7 +309,7 @@
       });
     });
 
-    // Quantity
+    // ===== Quantity =====
     const qty = document.getElementById('qty');
     document.getElementById('qMinus').addEventListener('click', () => qty.value = Math.max(1, (parseInt(qty.value)||1) - 1));
     document.getElementById('qPlus').addEventListener('click', () => qty.value = (parseInt(qty.value)||1) + 1);

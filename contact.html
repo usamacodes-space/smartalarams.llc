@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -19,119 +18,64 @@
       }
     }
   </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
-    rel="stylesheet">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
   <style>
-    body {
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-      background: #eaf1f5;
-    }
+    body { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial; background:#eaf1f5; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; font-weight:800; border-radius:9999px; padding:1rem 1.35rem; transition:all .22s ease; }
+    .btn:focus-visible { outline:none; box-shadow:0 0 0 4px rgba(0,191,230,.35); }
+    .btn-magic { color:#fff; background-image:linear-gradient(to bottom,#1f2937,#0f172a); box-shadow:0 18px 24px -18px rgba(0,0,0,.55),0 6px 18px -10px rgba(19,51,77,.45); border:1px solid rgba(255,255,255,.06); }
+    .btn-magic:hover { background-image:linear-gradient(to bottom,#00bfe6,#009bb8); transform:translateY(-2px); box-shadow:0 26px 46px -22px rgba(0,191,230,.55),0 12px 28px -16px rgba(0,155,184,.45); }
+    .btn-outline { background:#fff; color:#0f172a; border:1px solid #d7dee6; }
+    .btn-outline:hover { background:#f8fafc; }
 
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      border-radius: 9999px;
-      padding: 1rem 1.35rem;
-      transition: all .22s ease;
-    }
+    .navlink { position:relative; color:rgba(255,255,255,.86); transition:color .18s ease, text-shadow .18s ease; }
+    .navlink::after { content:""; position:absolute; left:0; right:0; bottom:-10px; height:2px; border-radius:2px; background:linear-gradient(90deg,#00bfe6,#009bb8); transform:scaleX(0); transform-origin:center; transition:transform .22s ease; opacity:.9; }
+    .navlink:hover { color:#9be8ff; text-shadow:0 0 12px rgba(0,191,230,.35); }
+    .navlink:hover::after { transform:scaleX(1); }
+    .navlink-active { color:#fff; border-bottom:2px solid #67e8f9; padding-bottom:2px; }
+    .navlink-active::after { display:none; }
 
-    .btn:focus-visible {
-      outline: none;
-      box-shadow: 0 0 0 4px rgba(0, 191, 230, .35);
-    }
+    .input { width:100%; border:1px solid #d7dee6; border-radius:0.9rem; padding:.8rem .95rem; }
+    .input:focus { outline:none; box-shadow:0 0 0 3px rgba(0,191,230,.28); border-color:#00bfe6; }
 
-    .btn-magic {
-      color: #fff;
-      background-image: linear-gradient(to bottom, #1f2937, #0f172a);
-      box-shadow: 0 18px 24px -18px rgba(0, 0, 0, .55), 0 6px 18px -10px rgba(19, 51, 77, .45);
-      border: 1px solid rgba(255, 255, 255, .06);
-    }
+    /* ── Leaflet UI placement + stacking ───────────────────────────────── */
+    /* Create a stacking context inside the map with safe z-order for controls */
+    #leafMap { position: relative; z-index: 1; }
+    #leafMap .leaflet-pane,
+    #leafMap .leaflet-top,
+    #leafMap .leaflet-bottom { z-index: 100 !important; } /* below header */
 
-    .btn-magic:hover {
-      background-image: linear-gradient(to bottom, #00bfe6, #009bb8);
-      transform: translateY(-2px);
-      box-shadow: 0 26px 46px -22px rgba(0, 191, 230, .55), 0 12px 28px -16px rgba(0, 155, 184, .45);
+    /* Force zoom control to bottom-right on all screens */
+    #leafMap .leaflet-control-zoom {
+      position: absolute !important;
+      right: 12px; bottom: 12px;
+      left: auto; top: auto;
     }
+    /* Give all control corners a little breathing room inside rounded card */
+    #leafMap .leaflet-top, #leafMap .leaflet-bottom { margin: 12px; }
 
-    .btn-outline {
-      background: #fff;
-      color: #0f172a;
-      border: 1px solid #d7dee6;
-    }
-
-    .btn-outline:hover {
-      background: #f8fafc;
-    }
-
-    .navlink {
-      position: relative;
-      color: rgba(255, 255, 255, .86);
-      transition: color .18s ease, text-shadow .18s ease;
-    }
-
-    .navlink::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: -10px;
-      height: 2px;
-      border-radius: 2px;
-      background: linear-gradient(90deg, #00bfe6, #009bb8);
-      transform: scaleX(0);
-      transform-origin: center;
-      transition: transform .22s ease;
-      opacity: .9;
-    }
-
-    .navlink:hover {
-      color: #9be8ff;
-      text-shadow: 0 0 12px rgba(0, 191, 230, .35);
-    }
-
-    .navlink:hover::after {
-      transform: scaleX(1);
-    }
-
-    .navlink-active {
-      color: #fff;
-      border-bottom: 2px solid #67e8f9;
-      padding-bottom: 2px;
-    }
-
-    .navlink-active::after {
-      display: none;
-    }
-
-    .input {
-      width: 100%;
-      border: 1px solid #d7dee6;
-      border-radius: 0.9rem;
-      padding: .8rem .95rem;
-    }
-
-    .input:focus {
-      outline: none;
-      box-shadow: 0 0 0 3px rgba(0, 191, 230, .28);
-      border-color: #00bfe6;
-    }
+    /* Nicer popup style */
+    #leafMap .leaflet-popup-content-wrapper { border-radius: 12px; }
   </style>
 </head>
 
 <body class="bg-slate-100 overflow-x-hidden">
 
-  <!-- SCRIM -->
-  <div id="scrim" class="fixed inset-0 bg-black/40 opacity-0 pointer-events-none transition-opacity z-40"></div>
+  <!-- SCRIM (above header) -->
+  <div id="scrim" class="fixed inset-0 bg-black/40 opacity-0 pointer-events-none transition-opacity z-[3500]"></div>
 
-  <!-- MOBILE MENU DRAWER -->
+  <!-- MOBILE MENU DRAWER (top-most) -->
   <aside id="mobileMenu"
-    class="fixed top-0 right-0 h-full w-80 max-w-[86vw] translate-x-full transition-transform z-50 bg-gradient-to-b from-[#0c2536] to-[#15384d] text-white shadow-2xl">
+    class="fixed top-0 right-0 h-full w-80 max-w-[86vw] translate-x-full transition-transform z-[3600]
+           bg-gradient-to-b from-[#0c2536] to-[#15384d] text-white shadow-2xl">
     <div class="px-5 py-4 flex items-center justify-between border-b border-white/10">
       <a href="index.html" class="flex items-baseline gap-2">
         <span class="text-2xl font-extrabold tracking-wide">SMART</span>
@@ -157,9 +101,9 @@
     </div>
   </aside>
 
-  <!-- HEADER -->
+  <!-- HEADER (well above Leaflet UI) -->
   <header
-    class="fixed inset-x-0 top-0 z-30 backdrop-blur bg-gradient-to-b from-[#0c2536] to-[#15384d] text-white shadow-header">
+    class="fixed inset-x-0 top-0 z-[3000] backdrop-blur bg-gradient-to-b from-[#0c2536] to-[#15384d] text-white shadow-header">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 lg:h-20 flex items-center justify-between">
       <a href="index.html" class="flex items-baseline gap-2">
         <span class="text-2xl lg:text-3xl font-extrabold tracking-wide">SMART</span>
@@ -226,8 +170,7 @@
             </div>
             <div class="sm:col-span-2">
               <label class="text-sm text-slate-600">Message</label>
-              <textarea class="input mt-1 min-h-[140px]" name="message" placeholder="Tell us a bit more..."
-                required></textarea>
+              <textarea class="input mt-1 min-h-[140px]" name="message" placeholder="Tell us a bit more..." required></textarea>
             </div>
             <div class="sm:col-span-2 flex items-center justify-between gap-3">
               <p class="text-xs text-slate-500">By submitting, you agree to our terms & privacy policy.</p>
@@ -257,35 +200,12 @@
         </aside>
       </section>
 
-<!-- Map (city-level, fills the card) -->
-<section class="mt-10">
-  <div class="rounded-3xl border border-slate-200 bg-slate-50 h-72 sm:h-80 lg:h-[26rem] shadow-card overflow-hidden">
-    <div id="leafMap" class="w-full h-full"></div>
-  </div>
-</section>
-<script>
-  // Center on your location (example: downtown SF). Change these to your exact coords.
-  const lat = 37.7835, lon = -122.402;    // <-- update if needed
-  const zoom = 14;                         // 12–15 = city/neighborhood
-
-  const map = L.map('leafMap', { scrollWheelZoom: false, zoomControl: true })
-               .setView([lat, lon], zoom);
-
-  // OSM tiles
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '&copy; OpenStreetMap'
-  }).addTo(map);
-
-  // Marker + optional popup
-  L.marker([lat, lon]).addTo(map)
-    .bindPopup('<b>Smart Alarms HQ</b><br>120 Market St, San Francisco')
-    .openPopup();
-
-  // Make sure the map fits its container when fonts/images finish loading
-  window.addEventListener('load', () => setTimeout(() => map.invalidateSize(), 0));
-</script>
-
+      <!-- Map (city-level, fills the card) -->
+      <section class="mt-10">
+        <div class="rounded-3xl border border-slate-200 bg-slate-50 h-64 sm:h-80 lg:h-[26rem] shadow-card overflow-hidden">
+          <div id="leafMap" class="w-full h-full"></div>
+        </div>
+      </section>
 
       <!-- FAQ -->
       <section class="mt-10 mb-14">
@@ -312,8 +232,38 @@
     </div>
   </main>
 
+  <!-- Map script -->
   <script>
-    // ===== Mobile menu =====
+    // Center on your location (example coords). Update if needed.
+    const lat = 37.7835, lon = -122.402;  // San Francisco (SoMa)
+    const zoom = 14;                       // 12–15 city/neighborhood
+
+    // Disable default zoomControl so we can place ours safely at bottom-right
+    const map = L.map('leafMap', {
+      zoomControl: false,
+      scrollWheelZoom: false,   // avoid scroll hijack on desktop
+      tap: true,
+      dragging: true
+    }).setView([lat, lon], zoom);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; OpenStreetMap'
+    }).addTo(map);
+
+    // Zoom control bottom-right (JS) — CSS forces it there too as a backup
+    L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+    L.marker([lat, lon]).addTo(map)
+      .bindPopup('<b>Smart Alarms HQ</b><br>120 Market St, San Francisco')
+      .openPopup();
+
+    // Ensure sizing after fonts/images load
+    window.addEventListener('load', () => setTimeout(() => map.invalidateSize(), 0));
+  </script>
+
+  <!-- Mobile menu script -->
+  <script>
     const menuBtn = document.getElementById('menuBtn');
     const mobileMenu = document.getElementById('mobileMenu');
     const closeMenu = document.getElementById('closeMenu');
@@ -338,5 +288,4 @@
     window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeDrawer(); });
   </script>
 </body>
-
 </html>

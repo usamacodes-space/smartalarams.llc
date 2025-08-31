@@ -6,129 +6,172 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Smart Alarms – Precision Protection 24/7</title>
 
-  <!-- Tailwind CSS (CDN for speed; swap to compiled build for prod) -->
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: '#13334d',
+            accent: '#00bfe6',
+            brand: { 500: '#00bfe6', 700: '#009bb8' },
+          },
+          boxShadow: {
+            header: '0 12px 30px -10px rgba(0,0,0,.35)',
+            soft: '0 28px 70px -25px rgba(0,0,0,.18)',
+            card: '0 18px 40px -16px rgba(2, 6, 23, .18)',
+          },
+          borderRadius: { '3xl': '1.75rem' },
+          keyframes: {
+            marquee: { '0%': { transform: 'translateX(0)' }, '100%': { transform: 'translateX(-50%)' } }
+          },
+          animation: { marquee: 'marquee 30s linear infinite' }
+        }
+      }
+    }
+  </script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="css/index.css">
-  <link rel="stylesheet" href="css/header.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    body { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial; }
+
+    /* Buttons */
+    .btn { display:inline-flex; align-items:center; justify-content:center; font-weight:800; border-radius:9999px; padding:.9rem 1.15rem; transition:all .22s ease; }
+    .btn:focus-visible { outline:none; box-shadow:0 0 0 4px rgba(0,191,230,.35); }
+    .btn-magic { color:#fff; background-image:linear-gradient(to bottom,#1f2937,#0f172a); box-shadow:0 18px 24px -18px rgba(0,0,0,.55),0 6px 18px -10px rgba(19,51,77,.45); border:1px solid rgba(255,255,255,.06); }
+    .btn-magic:hover { background-image:linear-gradient(to bottom,#00bfe6,#009bb8); transform:translateY(-2px); box-shadow:0 26px 46px -22px rgba(0,191,230,.55),0 12px 28px -16px rgba(0,155,184,.45); }
+
+    /* Nav hover effects */
+    .navlink { position: relative; color: rgba(255,255,255,.86); transition: color .18s ease, text-shadow .18s ease; }
+    .navlink::after { content:""; position:absolute; left:0; right:0; bottom:-10px; height:2px; border-radius:2px; background:linear-gradient(90deg,#00bfe6,#009bb8); transform:scaleX(0); transform-origin:center; transition:transform .22s ease; opacity:.9; }
+    .navlink:hover { color:#9be8ff; text-shadow:0 0 12px rgba(0,191,230,.35); }
+    .navlink:hover::after { transform:scaleX(1); }
+    .navlink-active { color:#fff; border-bottom:2px solid #67e8f9; padding-bottom:2px; }
+    .navlink-active::after { display:none; }
+
+    /* Marquee */
+    .marquee { display: flex; overflow: hidden; }
+    .marquee-track { display:flex; align-items:center; gap:2.5rem; width:200%; animation: marquee 30s linear infinite; }
+    .marquee-track img { height: 48px; width:auto; filter: grayscale(1) contrast(1.1); opacity:.85; }
+
+    @media (prefers-reduced-motion: reduce) { .btn, .navlink::after, .marquee-track { transition:none; animation:none; } }
+  </style>
 </head>
 
-<body class="bg-white text-slate-800">
+<body class="bg-white text-slate-800 overflow-x-hidden">
+  <!-- SCRIM for mobile menu -->
+  <div id="scrim" class="fixed inset-0 bg-black/40 opacity-0 pointer-events-none transition-opacity z-40"></div>
+
+  <!-- MOBILE MENU DRAWER (right side) -->
+  <aside id="mobileMenu" class="fixed top-0 right-0 h-full w-80 max-w-[86vw] translate-x-full transition-transform z-50 bg-gradient-to-b from-[#0c2536] to-[#15384d] text-white shadow-2xl">
+    <div class="px-5 py-4 flex items-center justify-between border-b border-white/10">
+      <a href="index.html" class="flex items-baseline gap-2" aria-label="Smart Alarms home">
+        <span class="text-2xl font-extrabold tracking-wide">SMART</span>
+        <span class="text-2xl font-extrabold tracking-wide text-cyan-300">ALARMS</span>
+      </a>
+      <button id="closeMenu" aria-label="Close menu" class="p-2 rounded-xl hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-cyan-300">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <nav class="px-5 py-3">
+      <a class="block py-3 navlink navlink-active" href="index.html">Home</a>
+      <a class="block py-3 navlink" href="pay-online.html">Pay Online</a>
+      <a class="block py-3 navlink" href="security-packages.html">Security Packages</a>
+      <a class="block py-3 navlink" href="medical-pendant.html">Medical Pendant</a>
+      <a class="block py-3 navlink" href="about.html">About Us</a>
+      <a class="block py-3 navlink" href="contact.html">Contact</a>
+    </nav>
+    <div class="px-5 py-4 border-t border-white/10">
+      <a href="quote.html" class="btn btn-magic w-full rounded-2xl">Get a Quote</a>
+    </div>
+  </aside>
+
   <!-- Top bar -->
   <div class="bg-slate-900 text-slate-200 text-xs">
-    <div class="mx-auto container-tight px-4 py-2 flex items-center justify-between gap-2">
-      <div>Call Us: <span class="font-semibold">1-800-633-321</span> · Email: sales@smartalarmsllc.com</div>
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 py-2 flex items-center justify-between gap-2">
+      <div class="truncate">Call Us: <span class="font-semibold">1-800-633-321</span> · Email: sales@smartalarmsllc.com</div>
       <a class="hover:text-white hidden sm:block" href="#">Help & Support</a>
     </div>
   </div>
 
   <!-- Header -->
-<header class="fixed inset-x-0 top-0 z-40 backdrop-blur bg-gradient-to-b from-[#0c2536] to-[#15384d] text-white shadow-header">
-  <div class="mx-auto max-w-7xl px-4 lg:px-8 h-16 lg:h-20 flex items-center justify-between">
-    <a href="index.html" class="flex items-baseline gap-2" aria-label="Smart Alarms home">
-      <span class="text-2xl lg:text-3xl font-extrabold tracking-wide">SMART</span>
-      <span class="text-2xl lg:text-3xl font-extrabold tracking-wide text-cyan-300">ALARMS</span>
-    </a>
-    <nav class="hidden md:flex items-center gap-7 text-[15px]">
-      <a class="navlink navlink-active" href="index.html">Home</a>
-      <a class="navlink" href="pay-online.html">Pay Online</a>
-      <a class="navlink" href="security-packages.html">Security Packages</a>
-      <a class="navlink" href="medical-pendant.html">Medical Pendant</a>
-      <a class="navlink" href="about.html">About Us</a>
-      <a class="navlink " href="contact.html">Contact</a>
-    </nav>
-    <a href="quote.html" class="btn btn-magic rounded-2xl hidden sm:inline-flex">Get a Quote</a>
-  </div>
-</header>
-
+  <header class="fixed inset-x-0 top-0 z-30 backdrop-blur bg-gradient-to-b from-[#0c2536] to-[#15384d] text-white shadow-header">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 lg:h-20 flex items-center justify-between">
+      <a href="index.html" class="flex items-baseline gap-2" aria-label="Smart Alarms home">
+        <span class="text-2xl lg:text-3xl font-extrabold tracking-wide">SMART</span>
+        <span class="text-2xl lg:text-3xl font-extrabold tracking-wide text-cyan-300">ALARMS</span>
+      </a>
+      <div class="flex items-center gap-3">
+        <nav class="hidden md:flex items-center gap-6 lg:gap-7 text-[15px]">
+          <a class="navlink navlink-active" href="index.html">Home</a>
+          <a class="navlink" href="pay-online.html">Pay Online</a>
+          <a class="navlink" href="security-packages.html">Security Packages</a>
+          <a class="navlink" href="medical-pendant.html">Medical Pendant</a>
+          <a class="navlink" href="about.html">About Us</a>
+          <a class="navlink" href="contact.html">Contact</a>
+        </nav>
+        <a href="quote.html" class="btn btn-magic rounded-2xl hidden sm:inline-flex">Get a Quote</a>
+        <!-- Mobile menu button on RIGHT -->
+        <button id="menuBtn" class="md:hidden p-2 rounded-xl hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-cyan-300" aria-label="Open menu" aria-controls="mobileMenu" aria-expanded="false">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
 
   <!-- HERO -->
-  <section id="hero" class="relative isolate" aria-labelledby="hero-title">
-    <!-- Background (fills whatever height the content needs) -->
+  <section id="hero" class="relative isolate pt-24 lg:pt-28" aria-labelledby="hero-title">
+    <!-- Background -->
     <div class="absolute inset-0 -z-10">
-      <img src="https://plus.unsplash.com/premium_photo-1661675723823-b561db82b9f1?q=80&w=1920&auto=format&fit=crop"
-        alt="Family enjoying sunset together for home security promotion" class="h-full w-full object-cover"
-        fetchpriority="high" decoding="async" />
-      <div class="hero-overlay absolute inset-0"></div>
+      <img src="https://plus.unsplash.com/premium_photo-1661675723823-b561db82b9f1?q=80&w=1920&auto=format&fit=crop" alt="Family enjoying sunset together for home security promotion" class="h-full w-full object-cover" fetchpriority="high" decoding="async" />
+      <div class="absolute inset-0 bg-slate-900/50"></div>
     </div>
 
     <!-- Content -->
-    <div class="mx-auto container-tight px-4 py-16 sm:py-20 lg:py-24">
-      <div class="grid w-full items-center gap-10 lg:grid-cols-2">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 py-14 sm:py-20 lg:py-24">
+      <div class="grid items-center gap-8 lg:grid-cols-2">
         <!-- Left content -->
         <div class="text-white lg:pl-8">
           <div class="mb-4 flex flex-wrap items-center gap-3">
             <span class="rounded-full bg-white/10 px-3 py-1 text-xs sm:text-sm backdrop-blur">Smart • Safe</span>
             <span class="rounded-full bg-white/10 px-3 py-1 text-xs sm:text-sm backdrop-blur">24/7 Monitoring</span>
           </div>
-
-          <h1 id="hero-title" class="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight">
-            Smart, Safe <br class="hidden sm:block" />Home Security
-          </h1>
-
-          <p class="mt-5 max-w-xl text-base sm:text-lg text-white/90">
-            Keep your home protected and connected with our easy app, pro monitoring, and ID theft protection.
-          </p>
-
+          <h1 id="hero-title" class="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight">Smart, Safe <br class="hidden sm:block" />Home Security</h1>
+          <p class="mt-5 max-w-xl text-base sm:text-lg text-white/90">Keep your home protected and connected with our easy app, pro monitoring, and ID theft protection.</p>
           <div class="mt-7 flex flex-col gap-3 sm:flex-row">
-            <a href="#cta"
-              class="btn btn-magic inline-flex items-center justify-center rounded-xl bg-accent px-6 py-4 text-base sm:text-lg font-semibold text-white shadow-soft"
-              aria-label="Get started with Smart Alarms">
-              Get Started
-            </a>
-            <a href="#features"
-              class="btn btn-magic inline-flex items-center justify-center rounded-xl bg-white px-6 py-4 text-base sm:text-lg font-semibold text-slate-900"
-              aria-label="Learn more about Smart Alarms features">
-              Learn More
-            </a>
+            <a href="#cta" class="btn btn-magic rounded-xl bg-accent px-6 py-4 text-base sm:text-lg font-semibold text-white shadow-soft" aria-label="Get started with Smart Alarms">Get Started</a>
+            <a href="#features" class="btn btn-magic rounded-xl bg-white px-6 py-4 text-base sm:text-lg font-semibold text-slate-900" aria-label="Learn more about Smart Alarms features">Learn More</a>
           </div>
         </div>
 
         <!-- Right: Quote form -->
         <aside class="w-full" aria-label="Get a Free Quote">
-          <form
-            class="mx-auto w-full max-w-md rounded-2xl bg-white/95 p-5 sm:p-6 shadow-[0_16px_40px_-18px_rgba(0,0,0,.35)] backdrop-blur"
-            aria-labelledby="quote-title">
+          <form class="mx-auto w-full max-w-md rounded-2xl bg-white/95 p-5 sm:p-6 shadow-[0_16px_40px_-18px_rgba(0,0,0,.35)] backdrop-blur" aria-labelledby="quote-title">
             <h2 id="quote-title" class="mb-4 text-xl sm:text-2xl font-bold" style="color:#13334d;">Get a Free Quote</h2>
-
             <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
               <label class="sr-only" for="q-name">Full Name</label>
-              <input id="q-name" type="text" name="name" placeholder="Full Name" required
-                class="w-full rounded-lg border border-slate-300 p-3 focus:outline-none focus:ring-2 focus:ring-brand-500" />
-
+              <input id="q-name" type="text" name="name" placeholder="Full Name" required class="w-full rounded-lg border border-slate-300 p-3 focus:outline-none focus:ring-2 focus:ring-brand-500" />
               <label class="sr-only" for="q-phone">Phone</label>
-              <input id="q-phone" type="tel" name="phone" placeholder="Phone" required
-                class="w-full rounded-lg border border-slate-300 p-3 focus:outline-none focus:ring-2 focus:ring-brand-500" />
-
+              <input id="q-phone" type="tel" name="phone" placeholder="Phone" required class="w-full rounded-lg border border-slate-300 p-3 focus:outline-none focus:ring-2 focus:ring-brand-500" />
               <label class="sr-only" for="q-email">Email</label>
-              <input id="q-email" type="email" name="email" placeholder="Email" required
-                class="w-full rounded-lg border border-slate-300 p-3 focus:outline-none focus:ring-2 focus:ring-brand-500" />
-
+              <input id="q-email" type="email" name="email" placeholder="Email" required class="w-full rounded-lg border border-slate-300 p-3 focus:outline-none focus:ring-2 focus:ring-brand-500" />
               <label class="sr-only" for="q-zip">ZIP Code</label>
-              <input id="q-zip" type="text" name="zip" placeholder="ZIP Code" inputmode="numeric" required
-                class="w-full rounded-lg border border-slate-300 p-3 focus:outline-none focus:ring-2 focus:ring-brand-500" />
+              <input id="q-zip" type="text" name="zip" placeholder="ZIP Code" inputmode="numeric" required class="w-full rounded-lg border border-slate-300 p-3 focus:outline-none focus:ring-2 focus:ring-brand-500" />
             </div>
-
             <label class="sr-only" for="q-interest">Interest</label>
-            <select id="q-interest" name="interest"
-              class="mt-3 w-full rounded-lg border border-slate-300 p-3 focus:outline-none focus:ring-2 focus:ring-brand-500">
+            <select id="q-interest" name="interest" class="mt-3 w-full rounded-lg border border-slate-300 p-3 focus:outline-none focus:ring-2 focus:ring-brand-500">
               <option value="">I’m interested in...</option>
               <option>Home Security</option>
               <option>Business Security</option>
               <option>Monitoring Services</option>
             </select>
-
             <label class="sr-only" for="q-notes">Notes</label>
-            <textarea id="q-notes" name="notes" placeholder="Notes (optional)"
-              class="mt-3 w-full rounded-lg border border-slate-300 p-3 min-h-[96px] resize-y focus:outline-none focus:ring-2 focus:ring-brand-500"></textarea>
-
-            <button type="submit"
-              class="btn btn-magic mt-5 w-full rounded-xl bg-accent px-5 py-3 font-semibold text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent">
-              Get My Quote
-            </button>
+            <textarea id="q-notes" name="notes" placeholder="Notes (optional)" class="mt-3 w-full rounded-lg border border-slate-300 p-3 min-h-[96px] resize-y focus:outline-none focus:ring-2 focus:ring-brand-500"></textarea>
+            <button type="submit" class="btn btn-magic mt-5 w-full rounded-xl bg-accent px-5 py-3 font-semibold text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent">Get My Quote</button>
             <p class="mt-2 text-center text-xs text-slate-500">No spam. We’ll contact you within 1 business day.</p>
           </form>
         </aside>
@@ -136,161 +179,85 @@
     </div>
   </section>
 
-
-
-
-  <!-- Feature icons -->
-
+  <!-- Feature cards -->
   <section id="articles" class="py-16 bg-white" aria-labelledby="articles-title">
-    <div class="mx-auto container-tight px-4">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6">
       <header class="text-center max-w-2xl mx-auto">
         <h2 id="articles-title" class="text-4xl font-bold text-slate-900">Why Choose Smart Alarms?</h2>
-        <p class="mt-3 text-lg text-slate-600">Pwoerful features designed to keep your home and family safe 24/7.</p>
+        <p class="mt-3 text-lg text-slate-600">Powerful features designed to keep your home and family safe 24/7.</p>
       </header>
 
       <div class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-        <!-- Card -->
-        <article class="group relative overflow-hidden rounded-3xl bg-white ring-1 ring-slate-200
-               shadow-[0_20px_40px_-20px_rgba(0,0,0,0.45),0_10px_30px_-18px_rgba(19,51,77,0.55)]
-               transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-[1.02]
-               hover:shadow-[0_30px_70px_-28px_rgba(0,0,0,0.55),0_20px_40px_-22px_rgba(19,51,77,0.65)]">
-          <!-- Image -->
+        <!-- Card 1 -->
+        <article class="group relative overflow-hidden rounded-3xl bg-white ring-1 ring-slate-200 shadow-[0_20px_40px_-20px_rgba(0,0,0,0.45),0_10px_30px_-18px_rgba(19,51,77,0.55)] transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_30px_70px_-28px_rgba(0,0,0,0.55),0_20px_40px_-22px_rgba(19,51,77,0.65)]">
           <div class="relative">
-            <img
-              src="https://plus.unsplash.com/premium_photo-1728831286897-04504e748a78?q=80&w=1191&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              alt="Smart camera bundle on a desk" class="w-full aspect-[16/9] object-cover" width="1600" height="900"
-              loading="lazy" decoding="async" />
-            <!-- Badge -->
-            <span
-              class="absolute top-3 right-3 rounded-full bg-white/85 px-3 py-1 text-xs font-semibold text-navy shadow-sm backdrop-blur">
-              UI/UX
-            </span>
+            <img src="https://plus.unsplash.com/premium_photo-1728831286897-04504e748a78?q=80&w=1191&auto=format&fit=crop&ixlib=rb-4.1.0" alt="Smart camera bundle on a desk" class="w-full aspect-[16/9] object-cover" loading="lazy" decoding="async" />
+            <span class="absolute top-3 right-3 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-navy shadow-sm backdrop-blur">UI/UX</span>
           </div>
-
-          <!-- Body -->
           <div class="p-6 sm:p-7">
             <h3 class="text-xl font-extrabold text-slate-900">Total Control</h3>
-            <p class="mt-2 text-slate-600">
-              Take control of your home anytime, anywhere with our easy-to-use app.
-            </p>
-
+            <p class="mt-2 text-slate-600">Take control of your home anytime, anywhere with our easy-to-use app.</p>
             <div class="mt-5">
-              <a href="#buy-1" class="inline-flex items-center gap-2 rounded-xl bg-accent px-5 py-3 font-semibold text-white
-                      shadow-[0_6px_18px_-6px_rgba(0,191,230,0.8)]
-                      hover:opacity-95 focus:outline-none focus:ring-2 focus:ring-accent/60">
-                Buy Now
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                </svg>
+              <a href="#buy-1" class="inline-flex items-center gap-2 rounded-xl bg-accent px-5 py-3 font-semibold text-white shadow-[0_6px_18px_-6px_rgba(0,191,230,0.8)] hover:opacity-95 focus:outline-none focus:ring-2 focus:ring-accent/60">Buy Now
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
               </a>
             </div>
           </div>
         </article>
 
-        <!-- Card -->
-        <article class="group relative overflow-hidden rounded-3xl bg-white ring-1 ring-slate-200
-               shadow-[0_20px_40px_-20px_rgba(0,0,0,0.45),0_10px_30px_-18px_rgba(19,51,77,0.55)]
-               transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-[1.02]
-               hover:shadow-[0_30px_70px_-28px_rgba(0,0,0,0.55),0_20px_40px_-22px_rgba(19,51,77,0.65)]">
+        <!-- Card 2 -->
+        <article class="group relative overflow-hidden rounded-3xl bg-white ring-1 ring-slate-200 shadow-[0_20px_40px_-20px_rgba(0,0,0,0.45),0_10px_30px_-18px_rgba(19,51,77,0.55)] transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_30px_70px_-28px_rgba(0,0,0,0.55),0_20px_40px_-22px_rgba(19,51,77,0.65)]">
           <div class="relative">
-            <img src="https://plus.unsplash.com/premium_photo-1728831285095-63346794b6ad?q=80&w=1127&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
-" alt="Sleek security keypad on wall" class="w-full aspect-[16/9] object-cover" loading="lazy" decoding="async" />
-            <span
-              class="absolute top-3 right-3 rounded-full bg-white/85 px-3 py-1 text-xs font-semibold text-navy shadow-sm backdrop-blur">
-              Security
-            </span>
+            <img src="https://plus.unsplash.com/premium_photo-1728831285095-63346794b6ad?q=80&w=1127&auto=format&fit=crop&ixlib=rb-4.1.0" alt="Sleek security keypad on wall" class="w-full aspect-[16/9] object-cover" loading="lazy" decoding="async" />
+            <span class="absolute top-3 right-3 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-navy shadow-sm backdrop-blur">Security</span>
           </div>
           <div class="p-6 sm:p-7">
             <h3 class="text-xl font-extrabold text-slate-900">Full Protection</h3>
             <p class="mt-2 text-slate-600">Customize your personal security to fit your home and living lifestyle.</p>
             <div class="mt-5">
-              <a href="#buy-2" class="inline-flex items-center gap-2 rounded-xl bg-accent px-5 py-3 font-semibold text-white
-                      shadow-[0_6px_18px_-6px_rgba(0,191,230,0.8)]
-                      hover:opacity-95 focus:outline-none focus:ring-2 focus:ring-accent/60">
-                Buy Now
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                </svg>
+              <a href="#buy-2" class="inline-flex items-center gap-2 rounded-xl bg-accent px-5 py-3 font-semibold text-white shadow-[0_6px_18px_-6px_rgba(0,191,230,0.8)] hover:opacity-95 focus:outline-none focus:ring-2 focus:ring-accent/60">Buy Now
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
               </a>
             </div>
           </div>
         </article>
 
-        <!-- Card -->
-        <article class="group relative overflow-hidden rounded-3xl bg-white ring-1 ring-slate-200
-               shadow-[0_20px_40px_-20px_rgba(0,0,0,0.45),0_10px_30px_-18px_rgba(19,51,77,0.55)]
-               transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-[1.02]
-               hover:shadow-[0_30px_70px_-28px_rgba(0,0,0,0.55),0_20px_40px_-22px_rgba(19,51,77,0.65)]">
+        <!-- Card 3 -->
+        <article class="group relative overflow-hidden rounded-3xl bg-white ring-1 ring-slate-200 shadow-[0_20px_40px_-20px_rgba(0,0,0,0.45),0_10px_30px_-18px_rgba(19,51,77,0.55)] transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_30px_70px_-28px_rgba(0,0,0,0.55),0_20px_40px_-22px_rgba(19,51,77,0.65)]">
           <div class="relative">
-            <img
-              src="https://plus.unsplash.com/premium_photo-1663076098283-470c41568359?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              alt="Outdoor smart camera on modern house" class="w-full aspect-[16/9] object-cover" loading="lazy"
-              decoding="async" />
-            <span
-              class="absolute top-3 right-3 rounded-full bg-white/85 px-3 py-1 text-xs font-semibold text-navy shadow-sm backdrop-blur">
-              Cameras
-            </span>
+            <img src="https://plus.unsplash.com/premium_photo-1663076098283-470c41568359?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0" alt="Outdoor smart camera on modern house" class="w-full aspect-[16/9] object-cover" loading="lazy" decoding="async" />
+            <span class="absolute top-3 right-3 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-navy shadow-sm backdrop-blur">Cameras</span>
           </div>
           <div class="p-6 sm:p-7">
             <h3 class="text-xl font-extrabold text-slate-900">Home Automation</h3>
-            <p class="mt-2 text-slate-600">Automate routines and simplify everyday task for smarter home.</p>
+            <p class="mt-2 text-slate-600">Automate routines and simplify everyday tasks for a smarter home.</p>
             <div class="mt-5">
-              <a href="#buy-3" class="inline-flex items-center gap-2 rounded-xl bg-accent px-5 py-3 font-semibold text-white
-                      shadow-[0_6px_18px_-6px_rgba(0,191,230,0.8)]
-                      hover:opacity-95 focus:outline-none focus:ring-2 focus:ring-accent/60">
-                Buy Now
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                </svg>
+              <a href="#buy-3" class="inline-flex items-center gap-2 rounded-xl bg-accent px-5 py-3 font-semibold text-white shadow-[0_6px_18px_-6px_rgba(0,191,230,0.8)] hover:opacity-95 focus:outline-none focus:ring-2 focus:ring-accent/60">Buy Now
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
               </a>
             </div>
           </div>
         </article>
-
-
       </div>
     </div>
   </section>
 
-
-
   <!-- RESPONSE-TIME / PARALLAX BANNER -->
-  <section class="relative text-white  overflow-hidden">
-    <!-- Parallax background -->
-    <div class="absolute inset-0 bg-fixed bg-center bg-cover" style="background-image:url('Assets/images/fc1.jpg');"
-      aria-hidden="true"></div>
-
-    <!-- Gradient overlay using theme colors -->
-    <div class="absolute inset-0 bg-gradient-to-b from-slate-900/90 via-slate-900/70 to-accent/50" aria-hidden="true">
-    </div>
-
-    <!-- Content -->
-    <div class="relative mx-auto container-tight px-6 py-20 md:py-28 text-center">
-      <h2 class="text-3xl sm:text-4xl md:text-5xl font-black">
-        Transform Your Security <span class="text-accent">With 30-Second Response</span>
-      </h2>
-      <p class="mt-4 text-white/80 max-w-2xl mx-auto">
-        Unlock peace of mind with our advanced monitoring — average response time of just 30 seconds when an alarm is
-        triggered.
-      </p>
-      <a href="#cta"
-        class="btn btn-magic mt-8 inline-flex items-center gap-2 px-6 py-3 rounded-full bg-accent text-white font-semibold shadow-lg hover:scale-105 transition-transform">
-        Learn More
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-        </svg>
+  <section class="relative text-white overflow-hidden">
+    <div class="absolute inset-0 bg-center bg-cover" style="background-image:url('Assets/images/fc1.jpg');" aria-hidden="true"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-slate-900/90 via-slate-900/70 to-accent/50" aria-hidden="true"></div>
+    <div class="relative mx-auto max-w-7xl px-6 py-20 md:py-28 text-center">
+      <h2 class="text-3xl sm:text-4xl md:text-5xl font-black">Transform Your Security <span class="text-accent">With 30-Second Response</span></h2>
+      <p class="mt-4 text-white/80 max-w-2xl mx-auto">Unlock peace of mind with our advanced monitoring — average response time of just 30 seconds when an alarm is triggered.</p>
+      <a href="#cta" class="btn btn-magic mt-8 inline-flex items-center gap-2 px-6 py-3 rounded-full bg-accent text-white font-semibold shadow-lg hover:scale-105 transition-transform">Learn More
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
       </a>
     </div>
   </section>
 
-
-
   <!-- App features -->
   <section id="app" class="py-16 bg-white" aria-labelledby="app-title">
-    <div class="mx-auto container-tight px-4">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6">
       <header class="text-center max-w-2xl mx-auto">
         <h2 id="app-title" class="text-3xl sm:text-4xl font-black text-slate-900">Easy to Use App!</h2>
         <p class="mt-2 text-slate-600">Enjoy a clean, friendly interface that makes it easy to configure and use.</p>
@@ -299,116 +266,67 @@
       <div class="mt-12 grid gap-8 md:grid-cols-3 md:items-start">
         <!-- Left column -->
         <div class="order-2 md:order-1 flex flex-col items-center gap-10">
-          <!-- Item -->
           <div class="max-w-[360px] text-center">
             <div class="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-navy/10 text-navy">
-              <!-- Bell icon -->
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
-                  d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>
             </div>
             <h3 class="text-xl font-extrabold text-navy tracking-wide uppercase">Get Notifications</h3>
             <p class="mt-2 text-slate-600">Email and push alerts for alarms and other events you assign in your app.</p>
           </div>
-
           <div class="max-w-[360px] text-center">
             <div class="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-navy/10 text-navy">
-              <!-- Adjustments icon -->
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
-                  d="M12 6v12m6-6H6m10-5a2 2 0 11-4 0 2 2 0 014 0zM8 19a2 2 0 100-4 2 2 0 000 4z" />
-              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 6v12m6-6H6m10-5a2 2 0 11-4 0 2 2 0 014 0zM8 19a2 2 0 100-4 2 2 0 000 4z" /></svg>
             </div>
             <h3 class="text-xl font-extrabold text-navy tracking-wide uppercase">Fully Automated</h3>
             <p class="mt-2 text-slate-600">Highly configurable settings allow you to automate your tasks.</p>
           </div>
-
           <div class="max-w-[360px] text-center">
             <div class="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-navy/10 text-navy">
-              <!-- Camera icon -->
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
-                  d="M3 7h3l2-3h8l2 3h3v12H3V7zm9 3a4 4 0 100 8 4 4 0 000-8z" />
-              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 7h3l2-3h8l2 3h3v12H3V7zm9 3a4 4 0 100 8 4 4 0 000-8z" /></svg>
             </div>
             <h3 class="text-xl font-extrabold text-navy tracking-wide uppercase">Camera Monitoring</h3>
-            <p class="mt-2 text-slate-600">Cloud-based continuous recording keeps your cameras and evidence protected.
-            </p>
+            <p class="mt-2 text-slate-600">Cloud-based continuous recording keeps your cameras and evidence protected.</p>
           </div>
-
           <div class="max-w-[360px] text-center">
             <div class="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-navy/10 text-navy">
-              <!-- Light bulb icon -->
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
-                  d="M12 3a7 7 0 00-4 12.9V18a2 2 0 002 2h4a2 2 0 002-2v-2.1A7 7 0 0012 3z" />
-              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 3a7 7 0 00-4 12.9V18a2 2 0 002 2h4a2 2 0 002-2v-2.1A7 7 0 0012 3z" /></svg>
             </div>
             <h3 class="text-xl font-extrabold text-navy tracking-wide uppercase">Control Lights</h3>
             <p class="mt-2 text-slate-600">Adjust any or all of your lights with a tap or a voice command.</p>
           </div>
         </div>
 
-        <!-- Phone mock (center) -->
+        <!-- Phone mock -->
         <div class="order-1 md:order-2 flex justify-center">
-          <img src="https://www.safehomesecurityinc.com/wp-content/uploads/2021/06/newgif3.gif"
-            alt="Smart Alarms app preview" class="max-w-[360px] w-full h-auto" loading="lazy" decoding="async" />
+          <img src="https://www.safehomesecurityinc.com/wp-content/uploads/2021/06/newgif3.gif" alt="Smart Alarms app preview" class="max-w-[360px] w-full h-auto" loading="lazy" decoding="async" />
         </div>
-
 
         <!-- Right column -->
         <div class="order-3 flex flex-col items-center gap-10">
           <div class="max-w-[360px] text-center">
             <div class="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-navy/10 text-navy">
-              <!-- Control icon -->
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 3v18m9-9H3" />
-              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 3v18m9-9H3" /></svg>
             </div>
             <h3 class="text-xl font-extrabold text-navy tracking-wide uppercase">Complete Control</h3>
             <p class="mt-2 text-slate-600">Arm/disarm, control thermostats, lights, locks &amp; more.</p>
           </div>
-
           <div class="max-w-[360px] text-center">
             <div class="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-navy/10 text-navy">
-              <!-- Users icon -->
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
-                  d="M17 20h5v-2a4 4 0 00-4-4h-1M9 20H4v-2a4 4 0 014-4h1m4-5a4 4 0 11-8 0 4 4 0 018 0zm10 0a4 4 0 11-8 0 4 4 0 018 0z" />
-              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17 20h5v-2a4 4 0 00-4-4h-1M9 20H4v-2a4 4 0 014-4h1m4-5a4 4 0 11-8 0 4 4 0 018 0zm10 0a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
             </div>
             <h3 class="text-xl font-extrabold text-navy tracking-wide uppercase">User Access</h3>
             <p class="mt-2 text-slate-600">Add, remove and audit contacts for access levels and codes.</p>
           </div>
-
           <div class="max-w-[360px] text-center">
             <div class="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-navy/10 text-navy">
-              <!-- Download icon -->
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
-                  d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M8 12l4 4m0 0l4-4m-4 4V4" />
-              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M8 12l4 4m0 0l4-4m-4 4V4" /></svg>
             </div>
             <h3 class="text-xl font-extrabold text-navy tracking-wide uppercase">Easy to Use</h3>
             <p class="mt-2 text-slate-600">Easy download and installation allows you to manage all devices.</p>
           </div>
-
           <div class="max-w-[360px] text-center">
             <div class="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-navy/10 text-navy">
-              <!-- Lock icon -->
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
-                  d="M12 11c-1.657 0-3 1.343-3 3v4h6v-4c0-1.657-1.343-3-3-3zM7 11V8a5 5 0 0110 0v3" />
-              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 11c-1.657 0-3 1.343-3 3v4h6v-4c0-1.657-1.343-3-3-3zM7 11V8a5 5 0 0110 0v3" /></svg>
             </div>
             <h3 class="text-xl font-extrabold text-navy tracking-wide uppercase">Lock Control</h3>
             <p class="mt-2 text-slate-600">Let a visitor in and disarm your security system with a single command.</p>
@@ -418,298 +336,149 @@
     </div>
   </section>
 
-
   <!-- Stats strip -->
   <section id="stats" class="py-14 bg-slate-50">
-    <div class="mx-auto container-tight px-4 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-
-      <!-- Homes Protected -->
-      <article
-        class="rounded-3xl bg-gradient-to-b from-navy to-navy/95 text-white p-8 text-center shadow-[0_24px_60px_-20px_rgba(0,0,0,.45)] ring-1 ring-white/10">
-        <!-- fixed-height icon row -->
-        <div class="h-10 flex items-center justify-center mb-4">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" aria-hidden="true" fill="none" viewBox="0 0 24 24"
-            stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M3 9.75l9-7.5 9 7.5M4.5 10.5V21h15V10.5M9 21V14h6v7" />
-          </svg>
-        </div>
-        <div class="stat-number text-4xl sm:text-5xl font-black">200,000+</div>
-        <div class="stat-label uppercase text-sm tracking-widest text-accent mt-1">Homes Protected</div>
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <article class="rounded-3xl bg-gradient-to-b from-navy to-navy/95 text-white p-8 text-center shadow-[0_24px_60px_-20px_rgba(0,0,0,.45)] ring-1 ring-white/10">
+        <div class="h-10 flex items-center justify-center mb-4"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9.75l9-7.5 9 7.5M4.5 10.5V21h15V10.5M9 21V14h6v7" /></svg></div>
+        <div class="text-4xl sm:text-5xl font-black">200,000+</div>
+        <div class="uppercase text-sm tracking-widest text-accent mt-1">Homes Protected</div>
       </article>
-
-      <!-- Smart Alarms (center) -->
-      <article
-        class="rounded-3xl bg-gradient-to-b from-navy to-navy/95 text-white p-8 text-center shadow-[0_24px_60px_-20px_rgba(0,0,0,.45)] ring-1 ring-white/10">
-        <!-- fixed-height icon row -->
-        <div class="h-10 flex items-center justify-center mb-4" aria-hidden="true">
-          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-            class="lucide lucide-cctv-icon lucide-cctv">
-            <path d="M16.75 12h3.632a1 1 0 0 1 .894 1.447l-2.034 4.069a1 1 0 0 1-1.708.134l-2.124-2.97" />
-            <path
-              d="M17.106 9.053a1 1 0 0 1 .447 1.341l-3.106 6.211a1 1 0 0 1-1.342.447L3.61 12.3a2.92 2.92 0 0 1-1.3-3.91L3.69 5.6a2.92 2.92 0 0 1 3.92-1.3z" />
-            <path d="M2 19h3.76a2 2 0 0 0 1.8-1.1L9 15" />
-            <path d="M2 21v-4" />
-            <path d="M7 9h.01" />
-          </svg>
-        </div>
-        <div class="stat-number text-4xl sm:text-5xl font-black">2,000+</div>
-        <div class="stat-label uppercase text-sm tracking-widest text-accent mt-1">Camera Installed in US</div>
+      <article class="rounded-3xl bg-gradient-to-b from-navy to-navy/95 text-white p-8 text-center shadow-[0_24px_60px_-20px_rgba(0,0,0,.45)] ring-1 ring-white/10">
+        <div class="h-10 flex items-center justify-center mb-4" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16.75 12h3.632a1 1 0 0 1 .894 1.447l-2.034 4.069a1 1 0 0 1-1.708.134l-2.124-2.97" /><path d="M17.106 9.053a1 1 0 0 1 .447 1.341l-3.106 6.211a1 1 0 0 1-1.342.447L3.61 12.3a2.92 2.92 0 0 1-1.3-3.91L3.69 5.6a2.92 2.92 0 0 1 3.92-1.3z" /><path d="M2 19h3.76a2 2 0 0 0 1.8-1.1L9 15" /><path d="M2 21v-4" /><path d="M7 9h.01" /></svg></div>
+        <div class="text-4xl sm:text-5xl font-black">2,000+</div>
+        <div class="uppercase text-sm tracking-widest text-accent mt-1">Camera Installed in US</div>
       </article>
-
-      <!-- Five Star Reviews -->
-      <article
-        class="rounded-3xl bg-gradient-to-b from-navy to-navy/95 text-white p-8 text-center shadow-[0_24px_60px_-20px_rgba(0,0,0,.45)] ring-1 ring-white/10">
-        <!-- fixed-height icon row (5 stars) -->
+      <article class="rounded-3xl bg-gradient-to-b from-navy to-navy/95 text-white p-8 text-center shadow-[0_24px_60px_-20px_rgba(0,0,0,.45)] ring-1 ring-white/10">
         <div class="h-10 flex items-center justify-center gap-2 mb-4" aria-hidden="true">
-          <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-            <path
-              d="M12 .587l3.668 7.568L24 9.748l-6 5.853L19.336 24 12 20.013 4.664 24 6 15.601 0 9.748l8.332-1.593z" />
-          </svg>
-          <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-            <path
-              d="M12 .587l3.668 7.568L24 9.748l-6 5.853L19.336 24 12 20.013 4.664 24 6 15.601 0 9.748l8.332-1.593z" />
-          </svg>
-          <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-            <path
-              d="M12 .587l3.668 7.568L24 9.748l-6 5.853L19.336 24 12 20.013 4.664 24 6 15.601 0 9.748l8.332-1.593z" />
-          </svg>
-          <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-            <path
-              d="M12 .587l3.668 7.568L24 9.748l-6 5.853L19.336 24 12 20.013 4.664 24 6 15.601 0 9.748l8.332-1.593z" />
-          </svg>
-          <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-            <path
-              d="M12 .587l3.668 7.568L24 9.748l-6 5.853L19.336 24 12 20.013 4.664 24 6 15.601 0 9.748l8.332-1.593z" />
-          </svg>
+          <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.568L24 9.748l-6 5.853L19.336 24 12 20.013 4.664 24 6 15.601 0 9.748l8.332-1.593z" /></svg>
+          <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.568L24 9.748l-6 5.853L19.336 24 12 20.013 4.664 24 6 15.601 0 9.748l8.332-1.593z" /></svg>
+          <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.568L24 9.748l-6 5.853L19.336 24 12 20.013 4.664 24 6 15.601 0 9.748l8.332-1.593z" /></svg>
+          <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.568L24 9.748l-6 5.853L19.336 24 12 20.013 4.664 24 6 15.601 0 9.748l8.332-1.593z" /></svg>
+          <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.568L24 9.748l-6 5.853L19.336 24 12 20.013 4.664 24 6 15.601 0 9.748l8.332-1.593z" /></svg>
         </div>
-        <div class="stat-number text-4xl sm:text-5xl font-black">2,300+</div>
-        <div class="stat-label uppercase text-sm tracking-widest text-accent mt-1">Five Star Reviews</div>
+        <div class="text-4xl sm:text-5xl font-black">2,300+</div>
+        <div class="uppercase text-sm tracking-widest text-accent mt-1">Five Star Reviews</div>
       </article>
-
     </div>
   </section>
 
-  <!-- NEWS / BLOG GRID (like the reference design) -->
+  <!-- NEWS / BLOG GRID -->
   <section id="news" class="py-20 bg-white" aria-labelledby="news-title">
-    <div class="mx-auto container-tight px-4">
-      <!-- Heading -->
+    <div class="mx-auto max-w-7xl px-4 sm:px-6">
       <header class="text-center max-w-3xl mx-auto">
-        <p
-          class="inline-block text-xs font-semibold tracking-widest text-navy/70 uppercase bg-navy/10 rounded-full px-3 py-1">
-          Blogs
-        </p>
+        <p class="inline-block text-xs font-semibold tracking-widest text-navy/70 uppercase bg-navy/10 rounded-full px-3 py-1">Blogs</p>
         <h2 id="news-title" class="mt-3 text-3xl sm:text-4xl font-black text-slate-900">Our Latest News</h2>
-        <p class="mt-3 text-slate-600">
-          There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in
-          some form.
-        </p>
+        <p class="mt-3 text-slate-600">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form.</p>
       </header>
-
-      <!-- Grid -->
       <div class="mt-12 grid gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
-        <!-- Card -->
-        <article
-          class="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_10px_30px_-18px_rgba(0,0,0,.25)] hover:shadow-[0_28px_60px_-22px_rgba(0,0,0,.28)] transition-all">
-          <img class="h-56 w-full object-cover"
-            src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1600&auto=format&fit=crop"
-            alt="Team discussing conversion ideas">
+        <!-- Card A -->
+        <article class="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_10px_30px_-18px_rgba(0,0,0,.25)] hover:shadow-[0_28px_60px_-22px_rgba(0,0,0,.28)] transition-all">
+          <img class="h-56 w-full object-cover" src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1600&auto=format&fit=crop" alt="Team discussing conversion ideas">
           <div class="p-6">
             <span class="text-xs font-semibold text-navy bg-navy/10 rounded-full px-2.5 py-1">Blog</span>
             <h3 class="mt-3 text-xl font-extrabold text-slate-900">Boost your conversion rate</h3>
-            <p class="mt-2 text-slate-600 line-clamp-3">
-              Lorem ipsum dolor sit amet, adipiscing elit, sed diam nonumy eirmod tempor ividunt dolore magna.
-            </p>
-            <!-- Author row -->
+            <p class="mt-2 text-slate-600 line-clamp-3">Lorem ipsum dolor sit amet, adipiscing elit, sed diam nonumy eirmod tempor ividunt dolore magna.</p>
             <div class="mt-6 flex items-center gap-3 text-sm text-slate-500">
-              <img class="h-9 w-9 rounded-full object-cover"
-                src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?q=80&w=200&auto=format&fit=crop"
-                alt="Roel Aufderhar">
+              <img class="h-9 w-9 rounded-full object-cover" src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?q=80&w=200&auto=format&fit=crop" alt="Roel Aufderhar">
               <div class="leading-5">
                 <div class="font-semibold text-slate-900">Roel Aufderhar</div>
-                <div class="flex items-center gap-2 text-xs">
-                  <span>Mar 15, 2025</span>
-                  <span>•</span>
-                  <span>5 min read</span>
-                </div>
+                <div class="flex items-center gap-2 text-xs"><span>Mar 15, 2025</span><span>•</span><span>5 min read</span></div>
               </div>
             </div>
           </div>
         </article>
-
-        <!-- Card -->
-        <article
-          class="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_10px_30px_-18px_rgba(0,0,0,.25)] hover:shadow-[0_28px_60px_-22px_rgba(0,0,0,.28)] transition-all">
-          <img class="h-56 w-full object-cover"
-            src="https://images.unsplash.com/photo-1520869562399-e772f042f422?q=80&w=1600&auto=format&fit=crop"
-            alt="Two colleagues reviewing search strategy">
+        <!-- Card B -->
+        <article class="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_10px_30px_-18px_rgba(0,0,0,.25)] hover:shadow-[0_28px_60px_-22px_rgba(0,0,0,.28)] transition-all">
+          <img class="h-56 w-full object-cover" src="https://images.unsplash.com/photo-1520869562399-e772f042f422?q=80&w=1600&auto=format&fit=crop" alt="Two colleagues reviewing search strategy">
           <div class="p-6">
             <span class="text-xs font-semibold text-navy bg-navy/10 rounded-full px-2.5 py-1">Video</span>
             <h3 class="mt-3 text-xl font-extrabold text-slate-900">How to use search engine</h3>
-            <p class="mt-2 text-slate-600 line-clamp-3">
-              Lorem ipsum dolor sit amet, adipiscing elit, sed diam nonumy eirmod tempor ividunt dolore magna.
-            </p>
+            <p class="mt-2 text-slate-600 line-clamp-3">Lorem ipsum dolor sit amet, adipiscing elit, sed diam nonumy eirmod tempor ividunt dolore magna.</p>
             <div class="mt-6 flex items-center gap-3 text-sm text-slate-500">
-              <img class="h-9 w-9 rounded-full object-cover"
-                src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?q=80&w=200&auto=format&fit=crop"
-                alt="Roel Aufderhar">
+              <img class="h-9 w-9 rounded-full object-cover" src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?q=80&w=200&auto=format&fit=crop" alt="Roel Aufderhar">
               <div class="leading-5">
                 <div class="font-semibold text-slate-900">Roel Aufderhar</div>
-                <div class="flex items-center gap-2 text-xs">
-                  <span>Mar 15, 2025</span>
-                  <span>•</span>
-                  <span>5 min read</span>
-                </div>
+                <div class="flex items-center gap-2 text-xs"><span>Mar 15, 2025</span><span>•</span><span>5 min read</span></div>
               </div>
             </div>
           </div>
         </article>
-
-        <!-- Card -->
-
-        <article
-          class="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_10px_30px_-18px_rgba(0,0,0,.25)] hover:shadow-[0_28px_60px_-22px_rgba(0,0,0,.28)] transition-all">
-          <img class="h-56 w-full object-cover"
-            src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1600&auto=format&fit=crop"
-            alt="Smart thermostat on wall">
+        <!-- Card C -->
+        <article class="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_10px_30px_-18px_rgba(0,0,0,.25)] hover:shadow-[0_28px_60px_-22px_rgba(0,0,0,.28)] transition-all">
+          <img class="h-56 w-full object-cover" src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1600&auto=format&fit=crop" alt="Smart thermostat on wall">
           <div class="p-6">
             <span class="text-xs font-semibold text-navy bg-navy/10 rounded-full px-2.5 py-1">How‑to</span>
             <h3 class="mt-3 text-xl font-extrabold text-slate-900">Program your thermostat in 5 minutes</h3>
-            <p class="mt-2 text-slate-600 line-clamp-3">
-              Geo‑fencing and simple schedules can lower bills while keeping rooms comfy.
-            </p>
+            <p class="mt-2 text-slate-600 line-clamp-3">Geo‑fencing and simple schedules can lower bills while keeping rooms comfy.</p>
             <div class="mt-6 flex items-center gap-3 text-sm text-slate-500">
-              <img class="h-9 w-9 rounded-full object-cover"
-                src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=200&auto=format&fit=crop"
-                alt="Jenny Wilson">
+              <img class="h-9 w-9 rounded-full object-cover" src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=200&auto=format&fit=crop" alt="Jenny Wilson">
               <div class="leading-5">
                 <div class="font-semibold text-slate-900">Jenny Wilson</div>
-                <div class="flex items-center gap-2 text-xs">
-                  <span>Mar 08, 2025</span>
-                  <span>•</span>
-                  <span>3 min read</span>
-                </div>
+                <div class="flex items-center gap-2 text-xs"><span>Mar 08, 2025</span><span>•</span><span>3 min read</span></div>
               </div>
             </div>
           </div>
         </article>
-
       </div>
     </div>
   </section>
 
-
   <!-- Dealers CTA -->
   <section id="dealers" class="py-16 bg-slate-900 text-white">
-    <div class="mx-auto container-tight px-4 grid lg:grid-cols-[1.2fr_.8fr] gap-10 items-center">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 grid lg:grid-cols-[1.2fr_.8fr] gap-10 items-center">
       <div>
-        <h2 class="text-2xl sm:text-3xl font-black">Become a Smart Alarms Dealer and Expand Your Existing Business
-          Profile</h2>
-        <p class="mt-3 text-white/80">Earn recurring revenue with our dealer program, marketing support, and training.
-          We provide the tools you need to get started.</p>
+        <h2 class="text-2xl sm:text-3xl font-black">Become a Smart Alarms Dealer and Expand Your Existing Business Profile</h2>
+        <p class="mt-3 text-white/80">Earn recurring revenue with our dealer program, marketing support, and training. We provide the tools you need to get started.</p>
         <div class="mt-6 flex flex-col sm:flex-row gap-3">
-          <a href="#contact"
-            class="btn btn-magic inline-flex justify-center px-5 py-3 rounded-xl bg-white text-slate-900 font-semibold">Get
-            Me
-            Started</a>
-          <a href="#"
-            class="btn btn-magic inline-flex justify-center px-5 py-3 rounded-xl border border-white/30 hover:bg-white/10">Program
-            Details</a>
+          <a href="#contact" class="btn btn-magic inline-flex justify-center px-5 py-3 rounded-xl bg-white text-slate-900 font-semibold">Get Me Started</a>
+          <a href="#" class="btn btn-magic inline-flex justify-center px-5 py-3 rounded-xl border border-white/30 hover:bg-white/10">Program Details</a>
         </div>
       </div>
-      <img class="rounded-2xl w-full object-cover"
-        src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1470&auto=format&fit=crop"
-        alt="install" />
+      <img class="rounded-2xl w-full object-cover" src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1470&auto=format&fit=crop" alt="install" />
     </div>
   </section>
 
   <!-- PARTNERS / CLIENTS -->
   <section id="partners" class="py-16 bg-white" aria-labelledby="partners-title">
-    <div class="mx-auto container-tight px-4">
-      <!-- Heading -->
+    <div class="mx-auto max-w-7xl px-4 sm:px-6">
       <header class="text-center max-w-3xl mx-auto">
-        <span class="inline-block rounded-full bg-navy/10 text-navy px-4 py-1 text-sm font-semibold">
-          Our Partners
-        </span>
-        <h2 id="partners-title" class="mt-4 text-3xl sm:text-4xl font-black text-slate-900">
-          Our Awesome Clients
-        </h2>
-        <p class="mt-3 text-slate-600">
-          Trusted by leading platforms and programs. We build secure, smart experiences together.
-        </p>
+        <span class="inline-block rounded-full bg-navy/10 text-navy px-4 py-1 text-sm font-semibold">Our Partners</span>
+        <h2 id="partners-title" class="mt-4 text-3xl sm:text-4xl font-black text-slate-900">Our Awesome Clients</h2>
+        <p class="mt-3 text-slate-600">Trusted by leading platforms and programs. We build secure, smart experiences together.</p>
       </header>
-
-      <!-- Marquee -->
       <div class="relative mt-10 overflow-hidden">
-        <!-- edge fade -->
-        <div class="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-white to-transparent">
-        </div>
-        <div class="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-white to-transparent">
-        </div>
-
+        <div class="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-white to-transparent"></div>
+        <div class="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-white to-transparent"></div>
         <div class="marquee group">
-          <!-- Track: duplicate logos twice for a seamless loop -->
           <ul class="marquee-track">
-            <!-- 1st set -->
-            <li><img
-                src="https://www.gstatic.com/marketing-cms/assets/images/cf/3c/0d56042f479fac9ad22d06855578/calender.webp=s96-fcrop64=1,00000000ffffffff-rw"
-                alt="Google Calendar" /></li>
-            <li><img
-                src="https://www.gstatic.com/marketing-cms/assets/images/3d/24/88d3db994ac296ff541ca1b31674/google-health-studies.webp=s96-fcrop64=1,00000000ffffffff-rw"
-                alt="Google Health Studies" /></li>
-            <li><img
-                src="https://www.gstatic.com/marketing-cms/assets/images/9f/21/ada9ff74459887b4a1f7fc88d775/google-play-protect.webp=s96-fcrop64=1,00000000ffffffff-rw"
-                alt="Google Play Protect" /></li>
-            <li><img
-                src="https://www.gstatic.com/marketing-cms/assets/images/f2/71/e3132cc94503a8a869058a79df74/google-tv.webp=s96-fcrop64=1,00000000ffffffff-rw"
-                alt="Google TV" /></li>
-            <li><img
-                src="https://www.gstatic.com/marketing-cms/assets/images/f1/27/7e12f62c4e43a3e3cf292f738efe/jigsaw.webp=n-w270-h96-fcrop64=1,00000000ffffffff-rw"
-                alt="Jigsaw" /></li>
-            <li><img
-                src="https://www.gstatic.com/marketing-cms/assets/images/7c/08/936f68c54b8daf40c92756ef21dc/kids-space.webp=s96-fcrop64=1,00000000ffffffff-rw"
-                alt="Kids Space" /></li>
-            <li><img
-                src="https://www.gstatic.com/marketing-cms/assets/images/bb/d2/dddd6be04fb5a2de29be0a57e011/nest-installer.webp=s96-fcrop64=1,00000000ffffffff-rw"
-                alt="Nest Installer" /></li>
-
-            <!-- 2nd set (duplicate) -->
-            <li><img
-                src="https://www.gstatic.com/marketing-cms/assets/images/cf/3c/0d56042f479fac9ad22d06855578/calender.webp=s96-fcrop64=1,00000000ffffffff-rw"
-                alt="Google Calendar (duplicate)" /></li>
-            <li><img
-                src="https://www.gstatic.com/marketing-cms/assets/images/3d/24/88d3db994ac296ff541ca1b31674/google-health-studies.webp=s96-fcrop64=1,00000000ffffffff-rw"
-                alt="Google Health Studies (duplicate)" /></li>
-            <li><img
-                src="https://www.gstatic.com/marketing-cms/assets/images/9f/21/ada9ff74459887b4a1f7fc88d775/google-play-protect.webp=s96-fcrop64=1,00000000ffffffff-rw"
-                alt="Google Play Protect (duplicate)" /></li>
-            <li><img
-                src="https://www.gstatic.com/marketing-cms/assets/images/f2/71/e3132cc94503a8a869058a79df74/google-tv.webp=s96-fcrop64=1,00000000ffffffff-rw"
-                alt="Google TV (duplicate)" /></li>
-            <li><img
-                src="https://www.gstatic.com/marketing-cms/assets/images/f1/27/7e12f62c4e43a3e3cf292f738efe/jigsaw.webp=n-w270-h96-fcrop64=1,00000000ffffffff-rw"
-                alt="Jigsaw (duplicate)" /></li>
-            <li><img
-                src="https://www.gstatic.com/marketing-cms/assets/images/7c/08/936f68c54b8daf40c92756ef21dc/kids-space.webp=s96-fcrop64=1,00000000ffffffff-rw"
-                alt="Kids Space (duplicate)" /></li>
-            <li><img
-                src="https://www.gstatic.com/marketing-cms/assets/images/bb/d2/dddd6be04fb5a2de29be0a57e011/nest-installer.webp=s96-fcrop64=1,00000000ffffffff-rw"
-                alt="Nest Installer (duplicate)" /></li>
+            <li><img src="https://www.gstatic.com/marketing-cms/assets/images/cf/3c/0d56042f479fac9ad22d06855578/calender.webp" alt="Google Calendar" /></li>
+            <li><img src="https://www.gstatic.com/marketing-cms/assets/images/3d/24/88d3db994ac296ff541ca1b31674/google-health-studies.webp" alt="Google Health Studies" /></li>
+            <li><img src="https://www.gstatic.com/marketing-cms/assets/images/9f/21/ada9ff74459887b4a1f7fc88d775/google-play-protect.webp" alt="Google Play Protect" /></li>
+            <li><img src="https://www.gstatic.com/marketing-cms/assets/images/f2/71/e3132cc94503a8a869058a79df74/google-tv.webp" alt="Google TV" /></li>
+            <li><img src="https://www.gstatic.com/marketing-cms/assets/images/f1/27/7e12f62c4e43a3e3cf292f738efe/jigsaw.webp" alt="Jigsaw" /></li>
+            <li><img src="https://www.gstatic.com/marketing-cms/assets/images/7c/08/936f68c54b8daf40c92756ef21dc/kids-space.webp" alt="Kids Space" /></li>
+            <li><img src="https://www.gstatic.com/marketing-cms/assets/images/bb/d2/dddd6be04fb5a2de29be0a57e011/nest-installer.webp" alt="Nest Installer" /></li>
+            <!-- duplicate set -->
+            <li><img src="https://www.gstatic.com/marketing-cms/assets/images/cf/3c/0d56042f479fac9ad22d06855578/calender.webp" alt="Google Calendar (duplicate)" /></li>
+            <li><img src="https://www.gstatic.com/marketing-cms/assets/images/3d/24/88d3db994ac296ff541ca1b31674/google-health-studies.webp" alt="Google Health Studies (duplicate)" /></li>
+            <li><img src="https://www.gstatic.com/marketing-cms/assets/images/9f/21/ada9ff74459887b4a1f7fc88d775/google-play-protect.webp" alt="Google Play Protect (duplicate)" /></li>
+            <li><img src="https://www.gstatic.com/marketing-cms/assets/images/f2/71/e3132cc94503a8a869058a79df74/google-tv.webp" alt="Google TV (duplicate)" /></li>
+            <li><img src="https://www.gstatic.com/marketing-cms/assets/images/f1/27/7e12f62c4e43a3e3cf292f738efe/jigsaw.webp" alt="Jigsaw (duplicate)" /></li>
+            <li><img src="https://www.gstatic.com/marketing-cms/assets/images/7c/08/936f68c54b8daf40c92756ef21dc/kids-space.webp" alt="Kids Space (duplicate)" /></li>
+            <li><img src="https://www.gstatic.com/marketing-cms/assets/images/bb/d2/dddd6be04fb5a2de29be0a57e011/nest-installer.webp" alt="Nest Installer (duplicate)" /></li>
           </ul>
         </div>
       </div>
     </div>
   </section>
 
-
   <!-- Footer -->
   <footer id="contact" class="bg-slate-950 text-slate-200">
-    <div class="mx-auto container-tight px-4 py-12 grid md:grid-cols-4 gap-10">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 py-12 grid md:grid-cols-4 gap-10">
       <div>
         <div class="text-3xl font-black">Smart Alarms</div>
-        <p class="mt-2 text-sm text-slate-400">One of the nation’s largest residential home security providers. We’re a
-          bonded company with excellent service.</p>
+        <p class="mt-2 text-sm text-slate-400">One of the nation’s largest residential home security providers. We’re a bonded company with excellent service.</p>
         <p class="mt-4 text-xs text-slate-500">© 2025 Smart Alarms LLC</p>
       </div>
       <div>
@@ -733,31 +502,37 @@
       <div>
         <h4 class="font-bold text-sm mb-3">Credit Disputes</h4>
         <p class="text-sm text-slate-400">To submit a credit reporting dispute, contact us via email.</p>
-        <a href="#" class="inline-flex mt-3 px-4 py-2 rounded-xl bg-accent text-white text-sm font-semibold">Email
-          Support</a>
+        <a href="#" class="inline-flex mt-3 px-4 py-2 rounded-xl bg-accent text-white text-sm font-semibold">Email Support</a>
       </div>
     </div>
   </footer>
 
-  <!-- Reusable components (rendered via JS innerHTML) -->
-  <template id="feature-item">
-    <div class="p-5 rounded-2xl border border-slate-200 bg-white shadow-soft">
-      <div class="font-bold"></div>
-      <p class="text-sm text-slate-600 mt-1"></p>
-    </div>
-  </template>
+  <script>
+    // ===== Mobile menu =====
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const closeMenu = document.getElementById('closeMenu');
+    const scrim = document.getElementById('scrim');
 
-  <template id="article-card">
-    <article class="rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-soft flex flex-col">
-      <img class="w-full aspect-video object-cover" />
-      <div class="p-5">
-        <h3 class="font-extrabold"></h3>
-        <p class="text-sm text-slate-600 mt-2"></p>
-        <a href="#" class="mt-4 inline-flex text-sm font-semibold text-brand-700">Read more →</a>
-      </div>
-    </article>
-  </template>
+    function openDrawer() {
+      mobileMenu.style.transform = 'translateX(0)';
+      scrim.style.opacity = '1';
+      scrim.style.pointerEvents = 'auto';
+      menuBtn?.setAttribute('aria-expanded', 'true');
+      document.body.classList.add('overflow-hidden');
+    }
+    function closeDrawer() {
+      mobileMenu.style.transform = 'translateX(100%)';
+      scrim.style.opacity = '0';
+      scrim.style.pointerEvents = 'none';
+      menuBtn?.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('overflow-hidden');
+    }
+    menuBtn?.addEventListener('click', openDrawer);
+    closeMenu?.addEventListener('click', closeDrawer);
+    scrim?.addEventListener('click', closeDrawer);
+    window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeDrawer(); });
+  </script>
 </body>
-<script src="js/index.js"></script>
 
 </html>

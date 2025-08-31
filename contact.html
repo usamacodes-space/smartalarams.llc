@@ -27,7 +27,7 @@
   <style>
     body {
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-      background: #eaf1f5
+      background: #eaf1f5;
     }
 
     .btn {
@@ -37,41 +37,41 @@
       font-weight: 800;
       border-radius: 9999px;
       padding: 1rem 1.35rem;
-      transition: all .22s ease
+      transition: all .22s ease;
     }
 
     .btn:focus-visible {
       outline: none;
-      box-shadow: 0 0 0 4px rgba(0, 191, 230, .35)
+      box-shadow: 0 0 0 4px rgba(0, 191, 230, .35);
     }
 
     .btn-magic {
       color: #fff;
       background-image: linear-gradient(to bottom, #1f2937, #0f172a);
       box-shadow: 0 18px 24px -18px rgba(0, 0, 0, .55), 0 6px 18px -10px rgba(19, 51, 77, .45);
-      border: 1px solid rgba(255, 255, 255, .06)
+      border: 1px solid rgba(255, 255, 255, .06);
     }
 
     .btn-magic:hover {
       background-image: linear-gradient(to bottom, #00bfe6, #009bb8);
       transform: translateY(-2px);
-      box-shadow: 0 26px 46px -22px rgba(0, 191, 230, .55), 0 12px 28px -16px rgba(0, 155, 184, .45)
+      box-shadow: 0 26px 46px -22px rgba(0, 191, 230, .55), 0 12px 28px -16px rgba(0, 155, 184, .45);
     }
 
     .btn-outline {
       background: #fff;
       color: #0f172a;
-      border: 1px solid #d7dee6
+      border: 1px solid #d7dee6;
     }
 
     .btn-outline:hover {
-      background: #f8fafc
+      background: #f8fafc;
     }
 
     .navlink {
       position: relative;
       color: rgba(255, 255, 255, .86);
-      transition: color .18s ease, text-shadow .18s ease
+      transition: color .18s ease, text-shadow .18s ease;
     }
 
     .navlink::after {
@@ -86,62 +86,101 @@
       transform: scaleX(0);
       transform-origin: center;
       transition: transform .22s ease;
-      opacity: .9
+      opacity: .9;
     }
 
     .navlink:hover {
       color: #9be8ff;
-      text-shadow: 0 0 12px rgba(0, 191, 230, .35)
+      text-shadow: 0 0 12px rgba(0, 191, 230, .35);
     }
 
     .navlink:hover::after {
-      transform: scaleX(1)
+      transform: scaleX(1);
     }
 
     .navlink-active {
       color: #fff;
       border-bottom: 2px solid #67e8f9;
-      padding-bottom: 2px
+      padding-bottom: 2px;
     }
 
     .navlink-active::after {
-      display: none
+      display: none;
     }
 
     .input {
       width: 100%;
       border: 1px solid #d7dee6;
       border-radius: 0.9rem;
-      padding: .8rem .95rem
+      padding: .8rem .95rem;
     }
 
     .input:focus {
       outline: none;
       box-shadow: 0 0 0 3px rgba(0, 191, 230, .28);
-      border-color: #00bfe6
+      border-color: #00bfe6;
     }
   </style>
 </head>
 
-<body class="bg-slate-100">
+<body class="bg-slate-100 overflow-x-hidden">
 
-  <!-- Header -->
+  <!-- SCRIM -->
+  <div id="scrim" class="fixed inset-0 bg-black/40 opacity-0 pointer-events-none transition-opacity z-40"></div>
+
+  <!-- MOBILE MENU DRAWER -->
+  <aside id="mobileMenu"
+    class="fixed top-0 right-0 h-full w-80 max-w-[86vw] translate-x-full transition-transform z-50 bg-gradient-to-b from-[#0c2536] to-[#15384d] text-white shadow-2xl">
+    <div class="px-5 py-4 flex items-center justify-between border-b border-white/10">
+      <a href="index.html" class="flex items-baseline gap-2">
+        <span class="text-2xl font-extrabold tracking-wide">SMART</span>
+        <span class="text-2xl font-extrabold tracking-wide text-cyan-300">ALARMS</span>
+      </a>
+      <button id="closeMenu" aria-label="Close menu"
+        class="p-2 rounded-xl hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-cyan-300">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+    <nav class="px-5 py-3">
+      <a class="block py-3 navlink" href="index.html">Home</a>
+      <a class="block py-3 navlink" href="pay-online.html">Pay Online</a>
+      <a class="block py-3 navlink" href="security-packages.html">Security Packages</a>
+      <a class="block py-3 navlink" href="medical-pendant.html">Medical Pendant</a>
+      <a class="block py-3 navlink" href="about.html">About Us</a>
+      <a class="block py-3 navlink navlink-active" href="contact.html">Contact</a>
+    </nav>
+    <div class="px-5 py-4 border-t border-white/10">
+      <a href="quote.html" class="btn btn-magic w-full rounded-2xl">Get a Quote</a>
+    </div>
+  </aside>
+
+  <!-- HEADER -->
   <header
-    class="fixed inset-x-0 top-0 z-40 backdrop-blur bg-gradient-to-b from-[#0c2536] to-[#15384d] text-white shadow-header">
-    <div class="mx-auto max-w-7xl px-4 lg:px-8 h-16 lg:h-20 flex items-center justify-between">
+    class="fixed inset-x-0 top-0 z-30 backdrop-blur bg-gradient-to-b from-[#0c2536] to-[#15384d] text-white shadow-header">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 lg:h-20 flex items-center justify-between">
       <a href="index.html" class="flex items-baseline gap-2">
         <span class="text-2xl lg:text-3xl font-extrabold tracking-wide">SMART</span>
         <span class="text-2xl lg:text-3xl font-extrabold tracking-wide text-cyan-300">ALARMS</span>
       </a>
-      <nav class="hidden md:flex items-center gap-7 text-[15px]">
-        <a class="navlink" href="index.html">Home</a>
-        <a class="navlink" href="pay-online.html">Pay Online</a>
-        <a class="navlink" href="security-packages.html">Security Packages</a>
-        <a class="navlink" href="medical-pendant.html">Medical Pendant</a>
-        <a class="navlink" href="about.html">About Us</a>
-        <a class="navlink navlink-active" href="contact.html">Contact</a>
-      </nav>
-      <a href="quote.html" class="btn btn-magic rounded-2xl hidden sm:inline-flex">Get a Quote</a>
+      <div class="flex items-center gap-3">
+        <nav class="hidden md:flex items-center gap-6 lg:gap-7 text-[15px]">
+          <a class="navlink" href="index.html">Home</a>
+          <a class="navlink" href="pay-online.html">Pay Online</a>
+          <a class="navlink" href="security-packages.html">Security Packages</a>
+          <a class="navlink" href="medical-pendant.html">Medical Pendant</a>
+          <a class="navlink" href="about.html">About Us</a>
+          <a class="navlink navlink-active" href="contact.html">Contact</a>
+        </nav>
+        <button id="menuBtn"
+          class="md:hidden p-2 rounded-xl hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-cyan-300"
+          aria-label="Open menu" aria-controls="mobileMenu" aria-expanded="false">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
     </div>
   </header>
 
@@ -191,6 +230,8 @@
             </div>
             <div class="sm:col-span-2 flex items-center justify-between gap-3">
               <p class="text-xs text-slate-500">By submitting, you agree to our terms & privacy policy.</p>
+            </div>
+            <div class="sm:col-span-2 flex items-center justify-between gap-3">
               <button type="submit" class="btn btn-magic">Send message</button>
             </div>
           </form>
@@ -246,6 +287,32 @@
       </section>
     </div>
   </main>
+
+  <script>
+    // ===== Mobile menu =====
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const closeMenu = document.getElementById('closeMenu');
+    const scrim = document.getElementById('scrim');
+    function openDrawer() {
+      mobileMenu.style.transform = 'translateX(0)';
+      scrim.style.opacity = '1';
+      scrim.style.pointerEvents = 'auto';
+      menuBtn.setAttribute('aria-expanded', 'true');
+      document.body.classList.add('overflow-hidden');
+    }
+    function closeDrawer() {
+      mobileMenu.style.transform = 'translateX(100%)';
+      scrim.style.opacity = '0';
+      scrim.style.pointerEvents = 'none';
+      menuBtn.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('overflow-hidden');
+    }
+    menuBtn?.addEventListener('click', openDrawer);
+    closeMenu?.addEventListener('click', closeDrawer);
+    scrim?.addEventListener('click', closeDrawer);
+    window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeDrawer(); });
+  </script>
 </body>
 
 </html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -11,38 +12,122 @@
     tailwind.config = {
       theme: {
         extend: {
-          colors: { navy:'#13334d', brand:{500:'#00bfe6',700:'#009bb8'} },
-          boxShadow:{ header:'0 12px 30px -10px rgba(0,0,0,.35)', card:'0 18px 40px -16px rgba(2,6,23,.18)' },
-          borderRadius:{ '3xl':'1.75rem' }
+          colors: { navy: '#13334d', brand: { 500: '#00bfe6', 700: '#009bb8' } },
+          boxShadow: { header: '0 12px 30px -10px rgba(0,0,0,.35)', card: '0 18px 40px -16px rgba(2,6,23,.18)' },
+          borderRadius: { '3xl': '1.75rem' }
         }
       }
     }
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
 
   <style>
-    body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:#eaf1f5}
-    .btn{display:inline-flex;align-items:center;justify-content:center;font-weight:800;border-radius:9999px;padding:1rem 1.35rem;transition:all .22s ease}
-    .btn:focus-visible{outline:none;box-shadow:0 0 0 4px rgba(0,191,230,.35)}
-    .btn-magic{color:#fff;background-image:linear-gradient(to bottom,#1f2937,#0f172a);box-shadow:0 18px 24px -18px rgba(0,0,0,.55),0 6px 18px -10px rgba(19,51,77,.45);border:1px solid rgba(255,255,255,.06)}
-    .btn-magic:hover{background-image:linear-gradient(to bottom,#00bfe6,#009bb8);transform:translateY(-2px);box-shadow:0 26px 46px -22px rgba(0,191,230,.55),0 12px 28px -16px rgba(0,155,184,.45)}
-    .btn-outline{background:#fff;color:#0f172a;border:1px solid #d7dee6}.btn-outline:hover{background:#f8fafc}
-    .navlink{position:relative;color:rgba(255,255,255,.86);transition:color .18s ease,text-shadow .18s ease}
-    .navlink::after{content:"";position:absolute;left:0;right:0;bottom:-10px;height:2px;border-radius:2px;background:linear-gradient(90deg,#00bfe6,#009bb8);transform:scaleX(0);transform-origin:center;transition:transform .22s ease;opacity:.9}
-    .navlink:hover{color:#9be8ff;text-shadow:0 0 12px rgba(0,191,230,.35)}
-    .navlink:hover::after{transform:scaleX(1)}
-    .navlink-active{color:#fff;border-bottom:2px solid #67e8f9;padding-bottom:2px}
-    .navlink-active::after{display:none}
-    .input{width:100%;border:1px solid #d7dee6;border-radius:0.9rem;padding:.8rem .95rem}
-    .input:focus{outline:none;box-shadow:0 0 0 3px rgba(0,191,230,.28);border-color:#00bfe6}
+    body {
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background: #eaf1f5
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      border-radius: 9999px;
+      padding: 1rem 1.35rem;
+      transition: all .22s ease
+    }
+
+    .btn:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(0, 191, 230, .35)
+    }
+
+    .btn-magic {
+      color: #fff;
+      background-image: linear-gradient(to bottom, #1f2937, #0f172a);
+      box-shadow: 0 18px 24px -18px rgba(0, 0, 0, .55), 0 6px 18px -10px rgba(19, 51, 77, .45);
+      border: 1px solid rgba(255, 255, 255, .06)
+    }
+
+    .btn-magic:hover {
+      background-image: linear-gradient(to bottom, #00bfe6, #009bb8);
+      transform: translateY(-2px);
+      box-shadow: 0 26px 46px -22px rgba(0, 191, 230, .55), 0 12px 28px -16px rgba(0, 155, 184, .45)
+    }
+
+    .btn-outline {
+      background: #fff;
+      color: #0f172a;
+      border: 1px solid #d7dee6
+    }
+
+    .btn-outline:hover {
+      background: #f8fafc
+    }
+
+    .navlink {
+      position: relative;
+      color: rgba(255, 255, 255, .86);
+      transition: color .18s ease, text-shadow .18s ease
+    }
+
+    .navlink::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -10px;
+      height: 2px;
+      border-radius: 2px;
+      background: linear-gradient(90deg, #00bfe6, #009bb8);
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform .22s ease;
+      opacity: .9
+    }
+
+    .navlink:hover {
+      color: #9be8ff;
+      text-shadow: 0 0 12px rgba(0, 191, 230, .35)
+    }
+
+    .navlink:hover::after {
+      transform: scaleX(1)
+    }
+
+    .navlink-active {
+      color: #fff;
+      border-bottom: 2px solid #67e8f9;
+      padding-bottom: 2px
+    }
+
+    .navlink-active::after {
+      display: none
+    }
+
+    .input {
+      width: 100%;
+      border: 1px solid #d7dee6;
+      border-radius: 0.9rem;
+      padding: .8rem .95rem
+    }
+
+    .input:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(0, 191, 230, .28);
+      border-color: #00bfe6
+    }
   </style>
 </head>
+
 <body class="bg-slate-100">
 
   <!-- Header -->
-  <header class="fixed inset-x-0 top-0 z-40 backdrop-blur bg-gradient-to-b from-[#0c2536] to-[#15384d] text-white shadow-header">
+  <header
+    class="fixed inset-x-0 top-0 z-40 backdrop-blur bg-gradient-to-b from-[#0c2536] to-[#15384d] text-white shadow-header">
     <div class="mx-auto max-w-7xl px-4 lg:px-8 h-16 lg:h-20 flex items-center justify-between">
       <a href="index.html" class="flex items-baseline gap-2">
         <span class="text-2xl lg:text-3xl font-extrabold tracking-wide">SMART</span>
@@ -101,7 +186,8 @@
             </div>
             <div class="sm:col-span-2">
               <label class="text-sm text-slate-600">Message</label>
-              <textarea class="input mt-1 min-h-[140px]" name="message" placeholder="Tell us a bit more..." required></textarea>
+              <textarea class="input mt-1 min-h-[140px]" name="message" placeholder="Tell us a bit more..."
+                required></textarea>
             </div>
             <div class="sm:col-span-2 flex items-center justify-between gap-3">
               <p class="text-xs text-slate-500">By submitting, you agree to our terms & privacy policy.</p>
@@ -161,4 +247,5 @@
     </div>
   </main>
 </body>
+
 </html>

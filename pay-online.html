@@ -7,71 +7,13 @@
 
   <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            brand: { 500: '#00bfe6', 700: '#009bb8' },
-            navy: '#13334d',
-            accent: '#00bfe6'
-          },
-          boxShadow: {
-            soft: '0 16px 40px -18px rgba(0,0,0,.35)',
-            card: '0 28px 70px -25px rgba(0,0,0,.35)'
-          }
-        }
-      }
-    }
-  </script>
+  <script src="js/pay-online.js"></script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="css/pay-online.css">
 
-  <style>
-    body { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial; background:#f1f5f9; }
-
-    /* THEME BUTTONS (match index) */
-    .btn { display:inline-flex; align-items:center; justify-content:center; font-weight:700; color:#fff; border-radius:1rem; padding:1rem 1.35rem; user-select:none; transition:all .3s ease; }
-    .btn-magic { background-image:linear-gradient(to bottom,#1f2937,#0f172a); box-shadow:0 18px 24px -18px rgba(0,0,0,.55),0 6px 18px -10px rgba(19,51,77,.45); border:1px solid rgba(255,255,255,.06); }
-    .btn-magic:hover { background-image:linear-gradient(to bottom,#00bfe6,#009bb8); transform:translateY(-2px); box-shadow:0 28px 46px -22px rgba(0,191,230,.65),0 14px 28px -16px rgba(0,155,184,.55); }
-    .btn-outline { background:#fff; color:#0f172a; border:1px solid #e5e7eb; }
-    .btn-outline:hover { background:#f8fafc; }
-    .btn:focus-visible { outline:none; box-shadow:0 0 0 4px rgba(0,191,230,.35); }
-
-    .input { width:100%; border:1px solid #cbd5e1; border-radius:.75rem; padding:.7rem .85rem; outline:none; }
-    .input:focus { box-shadow:0 0 0 3px rgba(0,191,230,.35); border-color:#00bfe6; }
-    .card  { border-radius:1rem; background:#fff; box-shadow:var(--shadow, 0 28px 70px -25px rgba(0,0,0,.25)); }
-
-    /* Stepper (purple rail + dots) */
-    .step-rail { position:relative; height:6px; background:#e5e7eb; border-radius:9999px; }
-    .step-rail > .progress { position:absolute; inset:0 auto 0 0; height:6px; background:#5b21b6; border-radius:9999px; width:20%; transition:width .3s ease; }
-    .step-dots { position:absolute; top:50%; left:0; right:0; transform:translateY(-50%); display:flex; justify-content:space-between; padding:0 2px; }
-    .step-dot { width:14px; height:14px; border-radius:9999px; background:#5b21b6; box-shadow:0 0 0 3px rgba(91,33,182,.15) inset; }
-    .step-dot.is-upcoming { background:#f1f5f9; box-shadow:0 0 0 3px #e5e7eb inset; }
-
-    /* Pricing cards + selected gradient ring */
-    .price-card { border-radius:18px; background:#fff; box-shadow:0 10px 30px rgba(0,0,0,.08); overflow:hidden; border:1px solid #e9eef5; transition:transform .18s ease, box-shadow .18s ease; }
-    .price-card:hover { transform:translateY(-2px); box-shadow:0 14px 40px rgba(0,0,0,.12); }
-    .price-head { padding:20px; border-radius:16px; margin:16px; }
-    .price-body { padding:20px; }
-    .price-button { border-radius:9999px; background:#111827; color:#fff; font-weight:700; padding:.95rem 1.1rem; }
-    .price-button:hover { background:#0b1220; }
-    .price-list li { padding:.7rem 0; border-bottom:1px dashed #e5e7eb; }
-    .price-list li:last-child { border-bottom:0; }
-    .price-card.selected { box-shadow:0 10px 40px rgba(0,191,230,.28); border-color:transparent; }
-    .price-card.selected .price-head { position:relative; }
-    .price-card.selected .price-head::after{
-      content:""; position:absolute; inset:-2px; border-radius:18px;
-      padding:2px; background:linear-gradient(90deg,#00bfe6,#009bb8);
-      -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite:xor; mask-composite:exclude;
-    }
-
-    /* Make *white* text in the inline SVG navy */
-    .brand-logo [fill="#ffffff"] { fill:#13334d !important; }
-  </style>
 </head>
 
 <body>

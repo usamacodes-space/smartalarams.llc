@@ -23,7 +23,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
     rel="stylesheet">
-
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <style>
     body {
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
@@ -256,12 +257,35 @@
         </aside>
       </section>
 
-      <!-- Map placeholder -->
-      <section class="mt-10">
-        <div class="rounded-3xl border border-slate-200 bg-slate-50 h-72 grid place-content-center shadow-card">
-          <div class="text-slate-500">Map placeholder (drop your map embed here)</div>
-        </div>
-      </section>
+<!-- Map (city-level, fills the card) -->
+<section class="mt-10">
+  <div class="rounded-3xl border border-slate-200 bg-slate-50 h-72 sm:h-80 lg:h-[26rem] shadow-card overflow-hidden">
+    <div id="leafMap" class="w-full h-full"></div>
+  </div>
+</section>
+<script>
+  // Center on your location (example: downtown SF). Change these to your exact coords.
+  const lat = 37.7835, lon = -122.402;    // <-- update if needed
+  const zoom = 14;                         // 12–15 = city/neighborhood
+
+  const map = L.map('leafMap', { scrollWheelZoom: false, zoomControl: true })
+               .setView([lat, lon], zoom);
+
+  // OSM tiles
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; OpenStreetMap'
+  }).addTo(map);
+
+  // Marker + optional popup
+  L.marker([lat, lon]).addTo(map)
+    .bindPopup('<b>Smart Alarms HQ</b><br>120 Market St, San Francisco')
+    .openPopup();
+
+  // Make sure the map fits its container when fonts/images finish loading
+  window.addEventListener('load', () => setTimeout(() => map.invalidateSize(), 0));
+</script>
+
 
       <!-- FAQ -->
       <section class="mt-10 mb-14">
